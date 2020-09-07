@@ -27,9 +27,9 @@
           </div>
         </div>
         <div class="Timeline__dates">
-          <div class="Timeline__dateStart">{{ startDate }}</div>
-          <div class="Timeline__dateCurrent">{{ currentDate }}</div>
-          <div class="Timeline__dateEnd">{{ endDate }}</div>
+          <div class="Timeline__dateStart">{{ formattedStartDate }}</div>
+          <div class="Timeline__dateCurrent">{{ formattedCurrentDate }}</div>
+          <div class="Timeline__dateEnd">{{ formattedEndDate }}</div>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@ export default {
     return {
       startDate: new Date(),
       endDate: new Date(),
-      currentDate: new Date(),
+
       filters: {},
       isLoading: false,
 
@@ -67,14 +67,26 @@ export default {
       errored: 0
     }
   },
+  computed: {
+    formattedStartDate() {
+      return utils.formatDate(this.startDate)
+    },
+    formattedEndDate() {
+      return utils.formatDate(this.endDate)
+    },
+    formattedCurrentDate() {
+      const start = this.startDate.getTime()
+      const end = this.endDate.getTime()
+      const current = this.value * (end - start) + start
+      return utils.formatDateTime(new Date(current))
+    }
+  },
   watch: {
     filter(value) {
       this.loadImages(value)
     },
     isLoading(value) {
-      console.log('isLoading', value)
       if (!value) {
-        console.log('start requesting')
         this.requestTimeout()
       } else {
         this.cancelTimeout()
