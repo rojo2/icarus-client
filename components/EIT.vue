@@ -42,6 +42,7 @@ import API from '@/api'
 import utils from '@/utils'
 
 export default {
+  name: 'EIT',
   components: {
     Loader
   },
