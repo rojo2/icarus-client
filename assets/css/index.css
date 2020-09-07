@@ -1,0 +1,1869 @@
+.Alert__metadata {
+  display: flex;
+  font-size: 0.75rem;
+  color: #609f8e;
+}
+.Alert {
+  position: relative;
+  padding: 0.5rem 1rem;
+  flex: 0 0 auto;
+}
+.Alert__basicInfo:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 2rem;
+  background-color: #cc7033;
+  transition: width 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.Panel__menuItem {
+  text-transform: uppercase;
+  padding: 0 1rem;
+  height: 2rem;
+  margin-left: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+.Button--sound {
+  text-transform: uppercase;
+  color: #609f8e;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+.Button--sound.isOn {
+  color: #ebfaf6;
+}
+.Image--notFound {
+  stroke-width: 1;
+  stroke: rgba(96,159,142,0.2);
+  fill: transparent;
+}
+.Alert__input,
+.AboutIcarus__input {
+  width: 0;
+  height: 0;
+  display: none;
+}
+.Text__header {
+  position: relative;
+  font-size: 2rem;
+  padding: 0.5rem 0 1.5rem;
+  text-transform: uppercase;
+  color: #eb8947;
+}
+.Text__body {
+  position: relative;
+  color: #609f8e;
+  padding-bottom: 1rem;
+}
+.Weather,
+.Sunspots,
+.SolarCycle,
+.Forecast {
+  flex: 0 0 100%;
+  display: flex;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+}
+section.isActive {
+  opacity: 1;
+  max-width: initial;
+  transform: translate3d(0, 0, 0);
+}
+.Weather__EITFilters,
+.Weather__fluxes,
+.Forecast__graphs,
+.Forecast__alerts,
+.Sunspots__image,
+.SolarCycle__graph,
+.Sunspots__description,
+.SolarCycle__description,
+.Sunspots__data {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.Sunspots__data {
+  flex: 0 1 20%;
+  display: flex;
+}
+.Weather__EITFilters,
+.Forecast__alerts,
+.Sunspots__description,
+.SolarCycle__description {
+  flex: 0 1 40%;
+  display: flex;
+}
+.Weather__fluxes,
+.Forecast__graphs,
+.Sunspots__image,
+.SolarCycle__graph {
+  flex: 0 0 60%;
+}
+.Panel__header {
+  flex: 0 0 auto;
+  position: relative;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  background-color: transparent;
+  border-top: 1px solid transparent;
+}
+section.isActive .Panel__header {
+  border-bottom: 1px solid rgba(96,159,142,0.2);
+  background-color: rgba(96,159,142,0.06);
+  border-top: 1px solid rgba(96,159,142,0.2);
+}
+.Panel__header:before,
+.Panel__header:after,
+.Panel__content--text:before,
+.Panel__content--text:after,
+.Panel__footer:before,
+.Panel__footer:after {
+  position: absolute;
+  content: '';
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  background-color: #ebfaf6;
+  z-index: 101;
+}
+.Page__top:before,
+.Page__top:after {
+  position: absolute;
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background-color: #ebfaf6;
+  z-index: 101;
+}
+.Panel__title {
+  flex: 1 0 auto;
+  text-transform: uppercase;
+  color: #eb8947;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+.Panel__menu {
+  flex: 0 0 auto;
+  font-size: 0.875rem;
+  display: flex;
+  padding: 0.25rem 0;
+}
+.Panel__content,
+.Panel__content--text,
+.Panel__content--noPadding {
+  flex: 1 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+.Panel__content--noPadding {
+  padding: 0;
+}
+.Panel__footer {
+  flex: 0 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(96,159,142,0.2);
+}
+.Nav__item.isActive,
+.Panel__menuItem.isActive {
+  background-color: rgba(96,159,142,0.2);
+  pointer-events: none;
+  color: #ebfaf6;
+  border-radius: 0.125rem;
+  box-shadow: inset 0 0 1rem rgba(235,250,246,0.06);
+}
+.Panel__menuItem:hover,
+.Nav__item:hover {
+  color: #ebfaf6;
+  border-radius: 0.125rem;
+  animation: animHover 0.1s ease-in-out;
+  background-color: rgba(96,159,142,0.2);
+}
+@-moz-keyframes animHover {
+  0% {
+    box-shadow: inset 0 0 0 #ebfaf6;
+    background-color: #000;
+  }
+  66% {
+    box-shadow: inset 0 -2rem 0 #ebfaf6;
+    color: #000;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 rgba(96,159,142,0.2);
+    background-color: #000;
+  }
+}
+@-webkit-keyframes animHover {
+  0% {
+    box-shadow: inset 0 0 0 #ebfaf6;
+    background-color: #000;
+  }
+  66% {
+    box-shadow: inset 0 -2rem 0 #ebfaf6;
+    color: #000;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 rgba(96,159,142,0.2);
+    background-color: #000;
+  }
+}
+@-o-keyframes animHover {
+  0% {
+    box-shadow: inset 0 0 0 #ebfaf6;
+    background-color: #000;
+  }
+  66% {
+    box-shadow: inset 0 -2rem 0 #ebfaf6;
+    color: #000;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 rgba(96,159,142,0.2);
+    background-color: #000;
+  }
+}
+@keyframes animHover {
+  0% {
+    box-shadow: inset 0 0 0 #ebfaf6;
+    background-color: #000;
+  }
+  66% {
+    box-shadow: inset 0 -2rem 0 #ebfaf6;
+    color: #000;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 rgba(96,159,142,0.2);
+    background-color: #000;
+  }
+}
+.Alert__metadata {
+  display: flex;
+  font-size: 0.75rem;
+  color: #609f8e;
+}
+.Alert {
+  position: relative;
+  padding: 0.5rem 1rem;
+  flex: 0 0 auto;
+}
+.Alert__basicInfo:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 2rem;
+  background-color: #cc7033;
+  transition: width 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.Panel__menuItem {
+  text-transform: uppercase;
+  padding: 0 1rem;
+  height: 2rem;
+  margin-left: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+.Button--sound {
+  text-transform: uppercase;
+  color: #609f8e;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+.Button--sound.isOn {
+  color: #ebfaf6;
+}
+.Image--notFound {
+  stroke-width: 1;
+  stroke: rgba(96,159,142,0.2);
+  fill: transparent;
+}
+.Alert__input,
+.AboutIcarus__input {
+  width: 0;
+  height: 0;
+  display: none;
+}
+.Text__header {
+  position: relative;
+  font-size: 2rem;
+  padding: 0.5rem 0 1.5rem;
+  text-transform: uppercase;
+  color: #eb8947;
+}
+.Text__body {
+  position: relative;
+  color: #609f8e;
+  padding-bottom: 1rem;
+}
+.Weather,
+.Sunspots,
+.SolarCycle,
+.Forecast {
+  flex: 0 0 100%;
+  display: flex;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+}
+section.isActive {
+  opacity: 1;
+  max-width: initial;
+  transform: translate3d(0, 0, 0);
+}
+.Weather__EITFilters,
+.Weather__fluxes,
+.Forecast__graphs,
+.Forecast__alerts,
+.Sunspots__image,
+.SolarCycle__graph,
+.Sunspots__description,
+.SolarCycle__description,
+.Sunspots__data {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.Sunspots__data {
+  flex: 0 1 20%;
+  display: flex;
+}
+.Weather__EITFilters,
+.Forecast__alerts,
+.Sunspots__description,
+.SolarCycle__description {
+  flex: 0 1 40%;
+  display: flex;
+}
+.Weather__fluxes,
+.Forecast__graphs,
+.Sunspots__image,
+.SolarCycle__graph {
+  flex: 0 0 60%;
+}
+.Panel__header {
+  flex: 0 0 auto;
+  position: relative;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  background-color: transparent;
+  border-top: 1px solid transparent;
+}
+section.isActive .Panel__header {
+  border-bottom: 1px solid rgba(96,159,142,0.2);
+  background-color: rgba(96,159,142,0.06);
+  border-top: 1px solid rgba(96,159,142,0.2);
+}
+.Panel__header:before,
+.Panel__header:after,
+.Panel__content--text:before,
+.Panel__content--text:after,
+.Panel__footer:before,
+.Panel__footer:after {
+  position: absolute;
+  content: '';
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  background-color: #ebfaf6;
+  z-index: 101;
+}
+.Page__top:before,
+.Page__top:after {
+  position: absolute;
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background-color: #ebfaf6;
+  z-index: 101;
+}
+.Panel__title {
+  flex: 1 0 auto;
+  text-transform: uppercase;
+  color: #eb8947;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+.Panel__menu {
+  flex: 0 0 auto;
+  font-size: 0.875rem;
+  display: flex;
+  padding: 0.25rem 0;
+}
+.Panel__content,
+.Panel__content--text,
+.Panel__content--noPadding {
+  flex: 1 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+.Panel__content--noPadding {
+  padding: 0;
+}
+.Panel__footer {
+  flex: 0 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(96,159,142,0.2);
+}
+.Nav__item.isActive,
+.Panel__menuItem.isActive {
+  background-color: rgba(96,159,142,0.2);
+  pointer-events: none;
+  color: #ebfaf6;
+  border-radius: 0.125rem;
+  box-shadow: inset 0 0 1rem rgba(235,250,246,0.06);
+}
+.Panel__menuItem:hover,
+.Nav__item:hover {
+  color: #ebfaf6;
+  border-radius: 0.125rem;
+  animation: animHover 0.1s ease-in-out;
+  background-color: rgba(96,159,142,0.2);
+}
+@-moz-keyframes animHover {
+  0% {
+    box-shadow: inset 0 0 0 #ebfaf6;
+    background-color: #000;
+  }
+  66% {
+    box-shadow: inset 0 -2rem 0 #ebfaf6;
+    color: #000;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 rgba(96,159,142,0.2);
+    background-color: #000;
+  }
+}
+@-webkit-keyframes animHover {
+  0% {
+    box-shadow: inset 0 0 0 #ebfaf6;
+    background-color: #000;
+  }
+  66% {
+    box-shadow: inset 0 -2rem 0 #ebfaf6;
+    color: #000;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 rgba(96,159,142,0.2);
+    background-color: #000;
+  }
+}
+@-o-keyframes animHover {
+  0% {
+    box-shadow: inset 0 0 0 #ebfaf6;
+    background-color: #000;
+  }
+  66% {
+    box-shadow: inset 0 -2rem 0 #ebfaf6;
+    color: #000;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 rgba(96,159,142,0.2);
+    background-color: #000;
+  }
+}
+@keyframes animHover {
+  0% {
+    box-shadow: inset 0 0 0 #ebfaf6;
+    background-color: #000;
+  }
+  66% {
+    box-shadow: inset 0 -2rem 0 #ebfaf6;
+    color: #000;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 rgba(96,159,142,0.2);
+    background-color: #000;
+  }
+}
+.Graph__image {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.Graph__line {
+  fill: transparent;
+  stroke: #eb8947;
+}
+.Graph__line.Graph__color0 {
+  fill: transparent;
+  stroke: #eb8947;
+}
+.Graph__line.Graph__color1 {
+  fill: transparent;
+  stroke: #eb5d47;
+}
+.Graph__area {
+  fill: rgba(235,137,71,0.06);
+}
+.Graph__area.Graph__color0 {
+  fill: rgba(235,137,71,0.06);
+}
+.Graph__area.Graph__color1 {
+  fill: rgba(235,93,71,0.06);
+}
+.Graph__axis {
+  fill: transparent;
+}
+.Graph__text {
+  fill: #609f8e;
+}
+.tick line {
+  stroke: rgba(96,159,142,0.1);
+}
+.tick text {
+  font-family: 'FiraSans';
+  font-weight: 200;
+  font-size: 0.75rem;
+  stroke: #609f8e;
+}
+.Graph__smoothed {
+  stroke: #e0eb47;
+}
+.Graph__observed {
+  stroke: rgba(224,235,71,0.3);
+}
+.Graph__predicted {
+  stroke: #eb8947;
+}
+.Graph__sun {
+  fill: transparent;
+}
+.Graph__sunspot {
+  stroke: #ebfaf6;
+  /* vector-effect: non-scaling-stroke; */
+  stroke-width: 1px;
+  fill: transparent;
+}
+.Graph__dots {
+  fill: transparent;
+}
+.Graph__density {
+  fill: #eb8947;
+}
+.Graph__temperature {
+  fill: #e0eb47;
+}
+.Graph__timeline {
+  stroke: #609f8e;
+}
+.Graph__sunspotInfo {
+  padding: 1rem;
+  fill: #000;
+  cursor: pointer;
+}
+.Graph__sunspotText {
+  font-family: 'FiraSans';
+  font-size: 1rem;
+  fill: #ebfaf6;
+  opacity: 0;
+  transform: translate(-64px, -128px);
+  transition: all 0.3s ease-out;
+}
+.Graph__sunspotInfoLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+.Graph__sunspotInfo:hover .Graph__sunspotText {
+  display: block;
+  opacity: 1;
+  transition: all 0.3s ease-in;
+}
+section.isActive .Panel__title {
+  animation: animTitle 1s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  opacity: 1;
+}
+section.isActive .Panel__header {
+  animation: animPanelHeader 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+section.isActive .Panel__content {
+  animation: animBodyIn 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+section.isActive .Panel__footer {
+  animation: animPanelFooter 1.6s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+section.isActive .Weather__EITFilters,
+section.isActive .Sunspots__image,
+section.isActive .SolarCycle__graph,
+section.isActive .Forecast__graphs {
+  transform-style: preserve-3d;
+  animation: anim3DPanelLeft 0.2s ease-in;
+}
+section.isActive .Weather__fluxes,
+section.isActive .Sunspots__description,
+section.isActive .SolarCycle__description,
+section.isActive .Forecast__alerts {
+  transform-style: preserve-3d;
+  animation: anim3DPanelRight 0.4s ease-in;
+}
+@-moz-keyframes animTitle {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes animTitle {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes animTitle {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes animTitle {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes animPanelHeader {
+  0% {
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+    border-top: 1px solid transparent;
+  }
+  60% {
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+    border-top: 1px solid transparent;
+  }
+  70% {
+    border-bottom: 1px solid #609f8e;
+    background-color: rgba(96,159,142,0.1);
+    border-top: 1px solid #609f8e;
+  }
+  100% {
+    border-bottom: 1px solid rgba(96,159,142,0.2);
+    background-color: rgba(96,159,142,0.06);
+    border-top: 1px solid rgba(96,159,142,0.2);
+  }
+}
+@-webkit-keyframes animPanelHeader {
+  0% {
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+    border-top: 1px solid transparent;
+  }
+  60% {
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+    border-top: 1px solid transparent;
+  }
+  70% {
+    border-bottom: 1px solid #609f8e;
+    background-color: rgba(96,159,142,0.1);
+    border-top: 1px solid #609f8e;
+  }
+  100% {
+    border-bottom: 1px solid rgba(96,159,142,0.2);
+    background-color: rgba(96,159,142,0.06);
+    border-top: 1px solid rgba(96,159,142,0.2);
+  }
+}
+@-o-keyframes animPanelHeader {
+  0% {
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+    border-top: 1px solid transparent;
+  }
+  60% {
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+    border-top: 1px solid transparent;
+  }
+  70% {
+    border-bottom: 1px solid #609f8e;
+    background-color: rgba(96,159,142,0.1);
+    border-top: 1px solid #609f8e;
+  }
+  100% {
+    border-bottom: 1px solid rgba(96,159,142,0.2);
+    background-color: rgba(96,159,142,0.06);
+    border-top: 1px solid rgba(96,159,142,0.2);
+  }
+}
+@keyframes animPanelHeader {
+  0% {
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+    border-top: 1px solid transparent;
+  }
+  60% {
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+    border-top: 1px solid transparent;
+  }
+  70% {
+    border-bottom: 1px solid #609f8e;
+    background-color: rgba(96,159,142,0.1);
+    border-top: 1px solid #609f8e;
+  }
+  100% {
+    border-bottom: 1px solid rgba(96,159,142,0.2);
+    background-color: rgba(96,159,142,0.06);
+    border-top: 1px solid rgba(96,159,142,0.2);
+  }
+}
+@-moz-keyframes animPanelFooter {
+  0% {
+    border-bottom: 1px solid transparent;
+  }
+  80% {
+    border-bottom: 1px solid transparent;
+  }
+  85% {
+    border-bottom: 1px solid #609f8e;
+  }
+  100% {
+    border-bottom: 1px solid rgba(96,159,142,0.2);
+  }
+}
+@-webkit-keyframes animPanelFooter {
+  0% {
+    border-bottom: 1px solid transparent;
+  }
+  80% {
+    border-bottom: 1px solid transparent;
+  }
+  85% {
+    border-bottom: 1px solid #609f8e;
+  }
+  100% {
+    border-bottom: 1px solid rgba(96,159,142,0.2);
+  }
+}
+@-o-keyframes animPanelFooter {
+  0% {
+    border-bottom: 1px solid transparent;
+  }
+  80% {
+    border-bottom: 1px solid transparent;
+  }
+  85% {
+    border-bottom: 1px solid #609f8e;
+  }
+  100% {
+    border-bottom: 1px solid rgba(96,159,142,0.2);
+  }
+}
+@keyframes animPanelFooter {
+  0% {
+    border-bottom: 1px solid transparent;
+  }
+  80% {
+    border-bottom: 1px solid transparent;
+  }
+  85% {
+    border-bottom: 1px solid #609f8e;
+  }
+  100% {
+    border-bottom: 1px solid rgba(96,159,142,0.2);
+  }
+}
+@-moz-keyframes animBodyIn {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes animBodyIn {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+}
+@-o-keyframes animBodyIn {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+}
+@keyframes animBodyIn {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes anim3DPanelLeft {
+  0% {
+    transform: matrix3D(0.8, 0, 0, -0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, -120, 0, 0, 1);
+  }
+  100% {
+    transform: matrix3D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+}
+@-webkit-keyframes anim3DPanelLeft {
+  0% {
+    transform: matrix3D(0.8, 0, 0, -0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, -120, 0, 0, 1);
+  }
+  100% {
+    transform: matrix3D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+}
+@-o-keyframes anim3DPanelLeft {
+  0% {
+    transform: matrix3D(0.8, 0, 0, -0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, -120, 0, 0, 1);
+  }
+  100% {
+    transform: matrix3D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+}
+@keyframes anim3DPanelLeft {
+  0% {
+    transform: matrix3D(0.8, 0, 0, -0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, -120, 0, 0, 1);
+  }
+  100% {
+    transform: matrix3D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+}
+@-moz-keyframes anim3DPanelRight {
+  0% {
+    opacity: 0;
+    transform: matrix3D(0.8, 0, 0, 0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, 120, 0, 0, 1);
+  }
+  50% {
+    opacity: 0;
+    transform: matrix3D(0.8, 0, 0, 0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, 120, 0, 0, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: matrix3D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+}
+@-webkit-keyframes anim3DPanelRight {
+  0% {
+    opacity: 0;
+    transform: matrix3D(0.8, 0, 0, 0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, 120, 0, 0, 1);
+  }
+  50% {
+    opacity: 0;
+    transform: matrix3D(0.8, 0, 0, 0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, 120, 0, 0, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: matrix3D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+}
+@-o-keyframes anim3DPanelRight {
+  0% {
+    opacity: 0;
+    transform: matrix3D(0.8, 0, 0, 0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, 120, 0, 0, 1);
+  }
+  50% {
+    opacity: 0;
+    transform: matrix3D(0.8, 0, 0, 0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, 120, 0, 0, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: matrix3D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+}
+@keyframes anim3DPanelRight {
+  0% {
+    opacity: 0;
+    transform: matrix3D(0.8, 0, 0, 0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, 120, 0, 0, 1);
+  }
+  50% {
+    opacity: 0;
+    transform: matrix3D(0.8, 0, 0, 0.0004, 0, 0.8, 0, 0, 0, 0, 1, 0, 120, 0, 0, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: matrix3D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+}
+@-moz-keyframes animTextIn {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes animTextIn {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes animTextIn {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes animTextIn {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@font-face {
+  font-family: 'FiraSans';
+  src: url("/fonts/FiraSans-Light.woff") format('woff');
+  font-weight: 200;
+}
+@font-face {
+  font-family: 'FiraSans';
+  src: url("/fonts/FiraSans-Medium.woff") format('woff');
+  font-weight: 500;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+html {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  margin: 0;
+  padding: 0;
+}
+body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body,
+label,
+input {
+  color: #609f8e;
+  font-family: 'FiraSans';
+  font-weight: 200;
+  line-height: 1.25;
+}
+a {
+  color: #adebda;
+  text-decoration: none;
+  transition: color 0.4s ease-in-out;
+}
+a:hover {
+  color: #ebfaf6;
+  transition: color 0.2s ease-in-out;
+}
+h3 {
+  text-transform: uppercase;
+  color: #eb8947;
+  font-weight: 200;
+  margin: 1rem 0 0.5rem;
+}
+h4 {
+  text-transform: uppercase;
+  color: #ebfaf6;
+  font-weight: 200;
+  margin: 0.5rem 0;
+}
+p {
+  margin: 0 0 2rem;
+  line-height: 1.4;
+}
+::-webkit-scrollbar {
+  width: 1px;
+}
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track-piece {
+  display: none;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(96,159,142,0.2);
+}
+#__nuxt,
+#__layout,
+#Application,
+.Icarus {
+  width: 100%;
+  height: 100%;
+}
+.Bokeh {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.2;
+}
+.Bokeh__particle--red {
+  fill: rgba(214,108,92,0.5);
+}
+.Bokeh__particle--magenta {
+  fill: rgba(112,188,194,0.25);
+}
+.Bokeh__particle--yellow {
+  fill: rgba(206,214,92,0.7);
+}
+.Page {
+  max-width: 3000px;
+  max-height: 1500px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+}
+.Page__top {
+  flex: 0 0 3.5rem;
+  display: flex;
+  align-items: flex-end;
+}
+.Page__bottom {
+  flex: 0 0 3rem;
+  display: flex;
+  align-items: flex-start;
+  padding: 0 2rem;
+}
+.Page__top {
+  position: relative;
+  margin: 2rem 2rem 0;
+  padding-bottom: 0rem;
+}
+.Page__top:before,
+.Page__top:after {
+  top: 0;
+}
+.Page__top:before {
+  left: 0;
+}
+.Page__top:after {
+  right: 0;
+}
+.Page__content {
+  flex: 1 1;
+  display: flex;
+  align-items: stretch;
+}
+
+.Nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+.Nav__item {
+  position: relative;
+  font-size: 1rem;
+  display: flex;
+  height: 2rem;
+  align-items: center;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+  padding: 0 2rem;
+}
+.Nav__itemAlert {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: #eb8947;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+}
+.Controls {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  bottom: 2rem;
+  right: 2rem;
+}
+.Button--sound .Icon--sound {
+  fill: #609f8e;
+}
+.Button--sound .Sound {
+  transform-origin: 50% 50%;
+}
+.Button--sound .Button__label {
+  margin-right: 0.5rem;
+}
+.Button--sound.isOn .Icon--sound {
+  fill: #ebfaf6;
+}
+.Button--sound.isOn .Sound--1 {
+  animation: animSound 1s ease-in-out infinite;
+}
+.Button--sound.isOn .Sound--2 {
+  animation: animSound 0.9s ease-in-out infinite;
+}
+.Button--sound.isOn .Sound--3 {
+  animation: animSound 0.7s ease-in-out infinite;
+}
+.Button--sound.isOn .Sound--4 {
+  animation: animSound 0.2s ease-in-out infinite;
+}
+.Button--sound.isOff .Icon--sound .Sound {
+  transform: scaleY(0.1);
+}
+.Panel__header:before,
+.Panel__header:after {
+  top: -3px;
+}
+.Panel__header:before {
+  left: -2px;
+}
+.Panel__header:after {
+  right: -2px;
+}
+.Unit {
+  color: #609f8e;
+}
+.ScrolledContent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding-right: 0.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.Panel__content--text:before {
+  top: -0.125rem;
+  right: -2px;
+}
+.Panel__content--text:after {
+  bottom: -0.125rem;
+  right: -2px;
+}
+.Panel__footer {
+  position: relative;
+}
+.Panel__footer:before,
+.Panel__footer:after {
+  bottom: -3px;
+}
+.Panel__footer:before {
+  left: -2px;
+}
+.Panel__footer:after {
+  right: -2px;
+}
+.EIT {
+  flex: 1 0;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+.Sun {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  bottom: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Sun__container {
+  display: inline-block;
+  margin: auto;
+  position: relative;
+  background-color: #000;
+  border-radius: 50%;
+}
+.Sun__date {
+  position: absolute;
+  right: 0;
+  font-size: 1.25rem;
+  bottom: 1rem;
+  color: #609f8e;
+}
+.Sun__vignette {
+  display: inline-block;
+  position: relative;
+  margin: auto;
+}
+.Sun__image {
+  position: relative;
+  display: block;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+  border: 4px solid #000;
+}
+.Sun__container:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: inset 0 0 4rem 2.5rem #000;
+  z-index: 10;
+}
+.Timeline {
+  margin: 1rem 0 1rem;
+  flex: 1 0 auto;
+}
+.Timeline__progress {
+  height: 1rem;
+  position: relative;
+}
+.Timeline__progress:before,
+.Timeline__progress:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  height: 2px;
+  width: 2px;
+  background-color: #ebfaf6;
+  z-index: 100;
+}
+.Timeline__progress:before {
+  left: 0;
+}
+.Timeline__progress:after {
+  right: 0;
+}
+.Timeline__bar {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  height: 2px;
+  background-color: rgba(96,159,142,0.2);
+}
+.Timeline__fill {
+  position: absolute;
+  height: 2px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform-origin: 0 0;
+  background-color: #609f8e;
+}
+.Timeline__mark {
+  cursor: pointer;
+  height: 1.5rem;
+  position: absolute;
+  top: -0.75rem;
+  margin-top: 1px;
+  margin-left: -0.4rem;
+  background-color: #ebfaf6;
+}
+.Timeline__mark:hover .Timeline__markTop {
+  border-top-color: #ebfaf6;
+}
+.Timeline__mark:hover .Timeline__markBottom {
+  border-bottom-color: #ebfaf6;
+}
+.Timeline__markTop,
+.Timeline__markBottom {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 0.4rem solid transparent;
+}
+.Timeline__markTop {
+  border-top-color: #eb8947;
+  top: 0;
+}
+.Timeline__markBottom {
+  border-bottom-color: #eb8947;
+  bottom: 0;
+}
+.Timeline__dates {
+  display: flex;
+  font-size: 0.875rem;
+  height: 1rem;
+}
+.Timeline__dateCurrent {
+  flex: 1 0 50%;
+  text-align: center;
+  color: #ebfaf6;
+}
+.Timeline__dateStart {
+  flex: 0 0 25%;
+}
+.Timeline__dateEnd {
+  flex: 0 0 25%;
+  text-align: right;
+}
+.Forecast__rationale,
+.Alerts {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  width: 100%;
+  bottom: 1rem;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+.Alert--summary .Alert__basicInfo:before {
+  background-color: #b39e4d;
+}
+.Alert--warning .Alert__basicInfo:before {
+  background-color: #f24a0d;
+}
+.Alert--watch .Alert__basicInfo:before {
+  background-color: #cc7033;
+}
+.Alert--extendedWarning .Alert__basicInfo:before {
+  background-color: #f24a0d;
+}
+.Alert--cancelWarning .Alert__basicInfo:before {
+  background-color: #7e9966;
+}
+.Alert:hover .Alert__message {
+  color: #ebfaf6;
+}
+.Alert:hover .Alert__basicInfo {
+  transition: background-color 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  background-color: rgba(96,159,142,0.1);
+}
+.Alert:hover .Alert__basicInfo:before,
+.Alert__input:checked ~ .Alert__basicInfo:before {
+  width: 6rem;
+  transition: width 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.Alert__basicInfo {
+  display: block;
+  padding-bottom: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.Alert__issueTime {
+  margin-right: 1rem;
+}
+.Alert__message {
+  color: #adebda;
+  text-transform: uppercase;
+}
+.Alert__extendedInfo {
+  max-height: 0;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  white-space: pre-wrap;
+  transform: translate3d(0, 0, 0);
+  transition: max-height 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.Alert__input:checked ~ .Alert__extendedInfo {
+  max-height: 20rem;
+  transform: translate3d(0, 0, 0);
+  transition: max-height 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.Graph {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.Graph__content {
+  flex: 1;
+  position: relative;
+  margin: 1rem 0 2rem;
+}
+.Graph__legends {
+  flex: 0 0 2rem;
+  display: flex;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(96,159,142,0.2);
+}
+.Graph__legend {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+}
+.Graph__legendColor--particle10,
+.Graph__legendColor--particle100,
+.Graph__legendColor--particles1,
+.Graph__legendColor--particles2,
+.Graph__legendColor--particles3,
+.Graph__legendColor--solarWind1,
+.Graph__legendColor--solarWind2,
+.Graph__legendColor--monthly,
+.Graph__legendColor--smoothedMonthly,
+.Graph__legendColor--predictedMonthly {
+  width: 1rem;
+  height: 0.5rem;
+  margin-right: 0.5rem;
+}
+.Graph__legendColor--particle10 {
+  background-color: #eb8947;
+}
+.Graph__legendColor--particle100 {
+  background-color: #eb5d47;
+}
+.Graph__legendColor--solarWind1 {
+  background-color: #eb8947;
+}
+.Graph__legendColor--solarWind2 {
+  background-color: #e0eb47;
+}
+.Graph__legendColor--monthly {
+  background-color: rgba(224,235,71,0.3);
+}
+.Graph__legendColor--smoothedMonthly {
+  background-color: #e0eb47;
+}
+.Graph__legendColor--predictedMonthly {
+  background-color: #eb8947;
+}
+.Graph__legendLabel {
+  font-size: 0.875rem;
+}
+.Sunspots__image image {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.Forecast__days {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  margin: 0 -1rem;
+}
+.Forecast__day {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 1rem 1rem 0;
+}
+.Forecast__dayLabel {
+  text-transform: uppercase;
+  font-size: 1rem;
+  flex: 0 0 auto;
+  text-align: left;
+  color: #ebfaf6;
+}
+.Forecast__dayData {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.RadialDanger {
+  width: 100%;
+  fill: transparent;
+  margin-bottom: 1rem;
+}
+.RadialDanger__base,
+.RadialDanger__base--initial,
+.RadialDanger__geomagnetic,
+.RadialDanger__solar,
+.RadialDanger__blackout {
+  stroke-width: 1px;
+  /* vector-effect: non-scaling-stroke; */
+}
+.RadialDanger__base,
+.RadialDanger__base--initial {
+  stroke: rgba(96,159,142,0.2);
+}
+.RadialDanger__base--initial {
+  fill: #000;
+}
+.RadialDanger__geomagnetic {
+  stroke: #eb8947;
+  fill: rgba(235,137,71,0.05);
+}
+.RadialDanger__solar {
+  stroke: #e0eb47;
+  fill: rgba(224,235,71,0.05);
+}
+.RadialDanger__blackout {
+  stroke: #47ebbf;
+  fill: rgba(71,235,191,0.05);
+}
+.RadialDanger__divider {
+  /* vector-effect: non-scaling-stroke; */
+  stroke-width: 1px;
+  stroke: #000;
+}
+.Forecast__stats {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  background-color: rgba(96,159,142,0.1);
+  border-radius: 0.125rem;
+}
+.Forecast__statsLabel,
+.Forecast__statsLabel--geomagnetic,
+.Forecast__statsLabel--solar,
+.Forecast__statsLabel--blackout {
+  flex: 1;
+  margin-right: 1rem;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+.Forecast__statsValue,
+.Forecast__statsValue--geomagnetic,
+.Forecast__statsValue--solar,
+.Forecast__statsValue--blackout {
+  flex: 0 0 40%;
+  font-size: 1.25rem;
+  text-align: right;
+}
+.Forecast__statsValue--solar {
+  font-size: 1rem;
+}
+.Forecast__statsLabel--geomagnetic,
+.Forecast__statsValue--geomagnetic {
+  color: #eb8947;
+}
+.Forecast__statsLabel--solar,
+.Forecast__statsValue--solar {
+  color: #e0eb47;
+}
+.Forecast__statsLabel--blackout,
+.Forecast__statsValue--blackout {
+  color: #47ebbf;
+}
+.GraphDanger__geomagnetic,
+.GraphDanger__solar,
+.GraphDanger__blackout {
+  border: 1px solid;
+  width: 2rem;
+  margin: 0 0.5rem;
+  position: relative;
+}
+.GraphDanger__geomagneticFill,
+.GraphDanger__solarFill,
+.GraphDanger__blackoutFill {
+  position: absolute;
+  bottom: 3px;
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  transform-origin: 0% 100%;
+  transform: scaleY(0.3);
+}
+.GraphDanger {
+  height: 30vh;
+  display: flex;
+  padding: 1rem 0 2rem;
+  justify-content: center;
+  align-items: stretch;
+}
+.GraphDanger__geomagneticFill {
+  background-color: #eb8947;
+}
+.GraphDanger__solarFill {
+  background-color: #e0eb47;
+}
+.GraphDanger__blackoutFill {
+  background-color: #47ebbf;
+}
+.AboutIcarus {
+  flex: 1;
+}
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__button {
+  position: absolute;
+  cursor: pointer;
+  bottom: 1.75rem;
+  left: 2rem;
+  transition: all 0.2s ease-in-out 0.2s;
+}
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__button:hover {
+  color: #ebfaf6;
+}
+.AboutIcarus__input:checked ~ .AboutIcarus__button {
+  position: fixed;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  font-size: 3rem;
+  text-transform: uppercase;
+  top: 8rem;
+  right: 8rem;
+  z-index: 1000;
+}
+.AboutIcarus__closeIcon {
+  stroke: #adebda;
+  stroke-width: 2;
+}
+.AboutIcarus__buttonText {
+  font-size: 0.875rem;
+  color: #adebda;
+  text-transform: uppercase;
+}
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__button .AboutIcarus__buttonText {
+  opacity: 1;
+  transition: all 0.1s ease-in-out 0.2s;
+}
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__button .AboutIcarus__buttonClose {
+  display: none;
+}
+.AboutIcarus__input:checked ~ .AboutIcarus__button .AboutIcarus__buttonClose {
+  opacity: 1;
+}
+.AboutIcarus__input:checked ~ .AboutIcarus__button .AboutIcarus__buttonText {
+  display: none;
+}
+.AboutIcarus__content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 90;
+}
+.AboutIcarus__infoPanel {
+  width: 42rem;
+  max-width: 50vw;
+  padding: 3.5rem;
+}
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__content {
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+}
+.AboutIcarus__input:checked ~ .AboutIcarus__content {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__content .AboutIcarus__infoPanel {
+  transform: matrix3D(1.2, 0, 0, 0.0004, 0, 1.2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  transition: all 0.2s ease-in-out;
+}
+.AboutIcarus__input:checked ~ .AboutIcarus__content .AboutIcarus__infoPanel {
+  pointer-events: all;
+  transform: matrix3D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  transition: all 0.2s ease-in-out;
+}
+@-moz-keyframes animSound {
+  0% {
+    transform: scaleY(0.1);
+    fill: #609f8e;
+  }
+  20% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0.4);
+  }
+  60% {
+    transform: scaleY(0.75);
+  }
+  80% {
+    transform: scaleY(0.2);
+    fill: #609f8e;
+  }
+  100% {
+    transform: scaleY(0.1);
+    fill: #609f8e;
+  }
+}
+@-webkit-keyframes animSound {
+  0% {
+    transform: scaleY(0.1);
+    fill: #609f8e;
+  }
+  20% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0.4);
+  }
+  60% {
+    transform: scaleY(0.75);
+  }
+  80% {
+    transform: scaleY(0.2);
+    fill: #609f8e;
+  }
+  100% {
+    transform: scaleY(0.1);
+    fill: #609f8e;
+  }
+}
+@-o-keyframes animSound {
+  0% {
+    transform: scaleY(0.1);
+    fill: #609f8e;
+  }
+  20% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0.4);
+  }
+  60% {
+    transform: scaleY(0.75);
+  }
+  80% {
+    transform: scaleY(0.2);
+    fill: #609f8e;
+  }
+  100% {
+    transform: scaleY(0.1);
+    fill: #609f8e;
+  }
+}
+@keyframes animSound {
+  0% {
+    transform: scaleY(0.1);
+    fill: #609f8e;
+  }
+  20% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0.4);
+  }
+  60% {
+    transform: scaleY(0.75);
+  }
+  80% {
+    transform: scaleY(0.2);
+    fill: #609f8e;
+  }
+  100% {
+    transform: scaleY(0.1);
+    fill: #609f8e;
+  }
+}
+@-moz-keyframes animLoader {
+  0% {
+    fill: #609f8e;
+    transform: scaleY(0.1);
+  }
+  50% {
+    fill: #eb8947;
+    transform: scaleY(1);
+  }
+  100% {
+    fill: #609f8e;
+    transform: scaleY(0.1);
+  }
+}
+@-webkit-keyframes animLoader {
+  0% {
+    fill: #609f8e;
+    transform: scaleY(0.1);
+  }
+  50% {
+    fill: #eb8947;
+    transform: scaleY(1);
+  }
+  100% {
+    fill: #609f8e;
+    transform: scaleY(0.1);
+  }
+}
+@-o-keyframes animLoader {
+  0% {
+    fill: #609f8e;
+    transform: scaleY(0.1);
+  }
+  50% {
+    fill: #eb8947;
+    transform: scaleY(1);
+  }
+  100% {
+    fill: #609f8e;
+    transform: scaleY(0.1);
+  }
+}
+@keyframes animLoader {
+  0% {
+    fill: #609f8e;
+    transform: scaleY(0.1);
+  }
+  50% {
+    fill: #eb8947;
+    transform: scaleY(1);
+  }
+  100% {
+    fill: #609f8e;
+    transform: scaleY(0.1);
+  }
+}
