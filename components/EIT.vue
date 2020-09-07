@@ -38,29 +38,214 @@
 
 <script>
 import Loader from '@/components/Loader'
+import API from '@/api'
+import utils from '@/utils'
 
 export default {
   components: {
     Loader
+  },
+  props: {
+    filter: {
+      type: [String, Number],
+      default: 1
+    }
   },
   data() {
     return {
       startDate: new Date(),
       endDate: new Date(),
       currentDate: new Date(),
+      filters: {},
       isLoading: false,
-      value: 0
+
+      value: 0,
+      index: 0,
+
+      loaded: 0,
+      total: 0,
+      errored: 0
     }
   },
+  watch: {
+    filter(value) {
+      this.loadImages(value)
+    },
+    isLoading(value) {
+      console.log('isLoading', value)
+      if (!value) {
+        console.log('start requesting')
+        this.requestTimeout()
+      } else {
+        this.cancelTimeout()
+      }
+    },
+    index(value) {
+      const filter = this.filter
+      if (this.filters[filter] && this.filters[filter].length > 0) {
+        const { canvas, sun: container } = this.$refs
+        const { width, height } = container.getBoundingClientRect()
+        canvas.width = width
+        canvas.height = height
+        const context = canvas.getContext('2d')
+        const filter = this.filter
+        const image = this.filters[filter][this.index]
+        if (image) {
+          const size = Math.min(width, height)
+          context.save()
+          context.translate(canvas.width * 0.5, canvas.height * 0.5)
+          context.drawImage(image, -size * 0.5, -size * 0.5, size, size)
+          context.restore()
+        }
+      }
+    }
+  },
+  mounted() {
+    this.loadImages(this.filter)
+  },
+  beforeDestroy() {
+    this.cancelTimeout()
+  },
   methods: {
-    handleMouseDown(e) {
-      // console.log(e)
+    updateValue(newValue) {
+      const clampedNewValue = Math.max(0, Math.min(1, newValue))
+      const filter = this.filter
+      if (this.filters[filter] && this.filters[filter].length > 0) {
+        this.value = clampedNewValue
+        this.index = Math.round(
+          clampedNewValue * (this.filters[filter].length - 1)
+        )
+      }
+      this.$emit('change', clampedNewValue)
+    },
+    updateValueFromEvent(e) {
+      const { left, width } = this.$refs.container.getBoundingClientRect()
+      const newValue = (e.clientX - left) / width
+      this.updateValue(newValue)
     },
     handleMouseDownRel(e) {
-      // console.log(e)
+      if (e.button === 0 && !this.isLoading) {
+        this.cancelTimeout()
+        document.addEventListener('mouseup', this.handleMouseUpRel)
+        document.addEventListener('mousemove', this.handleMouseMoveRel)
+        this.startX = e.clientX
+        this.currentX = e.clientX
+      }
+    },
+    handleMouseMoveRel(e) {
+      const { width } = this.$refs.sun.getBoundingClientRect()
+      const newValue = this.value + (e.clientX - this.currentX) / width
+      this.startX = this.currentX
+      this.currentX = e.clientX
+      this.updateValue(newValue)
+    },
+    handleMouseUpRel(e) {
+      if (e.button === 0) {
+        document.removeEventListener('mouseup', this.handleMouseUpRel)
+        document.removeEventListener('mousemove', this.handleMouseMoveRel)
+        this.requestTimeout(5000)
+      }
+    },
+    handleMouseDown(e) {
+      if (e.button === 0 && !this.isLoading) {
+        this.cancelTimeout()
+        document.addEventListener('mouseup', this.handleMouseUp)
+        document.addEventListener('mousemove', this.handleMouseMove)
+      }
+    },
+    handleMouseMove(e) {
+      this.updateValueFromEvent(e)
+    },
+    handleMouseUp(e) {
+      if (e.button === 0) {
+        document.removeEventListener('mouseup', this.handleMouseUp)
+        document.removeEventListener('mousemove', this.handleMouseMove)
+        this.requestTimeout(5000)
+      }
     },
     handleClick(e) {
-      // console.log(e)
+      this.cancelTimeout()
+      this.updateValueFromEvent(e)
+    },
+    handleTimeout() {
+      const filter = this.filter
+      const length =
+        (filter in this.filters && this.filters[filter].length - 1) || 0
+      const value =
+        this.value >= 1.0 && length > 0 ? 0.0 : this.value + 1 / length
+
+      this.value = value
+      this.index = Math.round(value * length)
+
+      this.$emit('change', value)
+
+      this.requestTimeout()
+    },
+    cancelTimeout() {
+      if (this.timeoutID !== null) {
+        clearTimeout(this.timeoutID)
+        this.timeoutID = null
+      }
+    },
+    requestTimeout(timeout = 96) {
+      if (this.timeoutID !== null) {
+        this.cancelTimeout()
+      }
+      this.timeoutID = setTimeout(this.handleTimeout, timeout)
+    },
+    loadImages(filter) {
+      if (this.filters[filter] && this.filters[filter].length > 0) {
+        return Promise.resolve(this.filters[filter])
+      }
+
+      if (!this.isLoading) {
+        this.isLoading = true
+      }
+
+      this.loaded = this.errored = this.total = 0
+
+      const minDate = utils.daysFrom(-7)
+      return API.getImageChannels({
+        channeltype: filter,
+        date_min: minDate
+      })
+        .then((res) => {
+          const images = res.data
+          this.total = images.length
+          utils.time(images)
+          const startDate = new Date(utils.min(images, 'time'))
+          const endDate = new Date(utils.max(images, 'time'))
+          this.data = images
+          this.startDate = startDate
+          this.endDate = endDate
+          return Promise.all(
+            images.map((image) => {
+              return new Promise((resolve, reject) => {
+                function handler(e) {
+                  if (e.type === 'load') {
+                    this.loaded++
+                    return resolve(e.target)
+                  }
+                  this.errored++
+                  return reject(e)
+                }
+
+                // TODO: Esto molaría pasarlo a un helper
+                const img = new Image()
+                img.addEventListener('load', handler)
+                img.addEventListener('error', handler)
+                img.addEventListener('abort', handler)
+                img.crossOrigin = 'anonymous'
+                img.src = image.image
+              })
+            })
+          )
+        })
+        .then((images) => {
+          this.filters[filter] = images
+          this.isLoading = false
+          return images
+        })
     }
   }
 }
