@@ -141,9 +141,11 @@
         <Loader :is-loading="isLoading" />
         <div class="Graph">
           <div ref="container" class="Graph__content">
-            <!-- {this.renderGraph(flux)} -->
+            <Graph>
+              <SolarWind />
+            </Graph>
           </div>
-          <!-- {this.renderGraphLegend(flux)} -->
+          <GraphLegend :data="flux" />
         </div>
       </div>
       <div class="Panel__footer"></div>
@@ -152,20 +154,156 @@
 </template>
 
 <script>
+import API from '@/api'
+import utils from '@/utils'
+
 import Loader from '@/components/Loader'
 import EIT from '@/components/EIT'
+import GraphLegend from '@/components/GraphLegend'
+import Graph from '@/components/Graph'
+import SolarWind from '@/components/graphs/SolarWind'
+
+async function getSolarWind() {
+  const minDateFormatted = utils.daysFrom(-7)
+  const res = await Promise.all([
+    API.getSolarWind({
+      date_min: minDateFormatted
+    })
+  ])
+  return res.map((res) => res.data)
+}
+
+async function getProtonFlux() {
+  const minDateFormatted = utils.daysFrom(-7)
+  const res = await Promise.all([
+    API.getProtonFlux({
+      ptype: 1,
+      date_min: minDateFormatted
+    }),
+    API.getProtonFlux({
+      ptype: 3,
+      date_min: minDateFormatted
+    }),
+    API.getProtonFluxTypes()
+  ])
+  return res.map((res) => res.data)
+}
+
+async function getElectronFlux() {
+  const minDateFormatted = utils.daysFrom(-7)
+  const res = await Promise.all([
+    API.getElectronFlux({
+      etype: 2,
+      date_min: minDateFormatted
+    }),
+    API.getElectronFlux({
+      etype: 1,
+      date_min: minDateFormatted
+    }),
+    API.getElectronFluxTypes()
+  ])
+  return res.map((res) => res.data)
+}
+
+async function getXrayFlux() {
+  const minDateFormatted = utils.daysFrom(-7)
+  const res = await Promise.all([
+    API.getXrayFlux({
+      xtype: 1,
+      date_min: minDateFormatted
+    }),
+    API.getXrayFlux({
+      xtype: 2,
+      date_min: minDateFormatted
+    }),
+    API.getXrayFluxTypes()
+  ])
+  return res.map((res) => res.data)
+}
 
 export default {
   components: {
+    SolarWind,
+    Graph,
+    GraphLegend,
     Loader,
     EIT
+  },
+  async asyncData(context) {
+    const asyncData = {
+      solarWind: null,
+      protonFlux: null,
+      electronFlux: null,
+      xrayFlux: null
+    }
+    switch (context.route.query.flux) {
+      default:
+      case 'solar-wind':
+        asyncData.solarWind = await getSolarWind()
+        break
+      case 'particle':
+        asyncData.protonFlux = await getProtonFlux()
+        break
+      case 'electron':
+        asyncData.electronFlux = await getElectronFlux()
+        break
+      case 'x-ray':
+        asyncData.xrayFlux = await getXrayFlux()
+        break
+    }
+    return asyncData
   },
   data() {
     return {
       isLoading: false
     }
   },
+  computed: {
+    flux() {
+      const { flux } = this.$route.query
+      switch (flux) {
+        default:
+        case 'solar-wind':
+          return this.solarWind
+        case 'particle':
+          return this.protonFlux
+        case 'electron':
+          return this.electronFlux
+        case 'x-ray':
+          return this.xrayFlux
+      }
+    }
+  },
   methods: {
+    async loadSolarWind() {
+      this.solarWind = await getSolarWind()
+    },
+    async loadProtonFlux() {
+      this.protonFlux = await getProtonFlux()
+    },
+    async loadElectronFlux() {
+      this.electronFlux = await getElectronFlux()
+    },
+    async loadXrayFlux() {
+      this.xrayFlux = await getXrayFlux()
+    },
+    loadFlux(flux) {
+      switch (flux) {
+        default:
+        case 'solar-wind':
+          this.loadSolarWind()
+          break
+        case 'particle':
+          this.loadProtonFlux()
+          break
+        case 'electron':
+          this.loadElectronFlux()
+          break
+        case 'x-ray':
+          this.loadXrayFlux()
+          break
+      }
+    },
     handleTimelineChange(e) {
       // console.log(e)
     }
