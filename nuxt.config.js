@@ -1,5 +1,6 @@
-module.exports = {
+export default {
   mode: 'universal',
+  components: true,
   /*
    ** Headers of the page
    */
@@ -76,10 +77,8 @@ module.exports = {
    ** Global CSS
    */
   css: [
-    '@/assets/css/base.css',
-    '@/assets/css/animations.css',
-    '@/assets/css/graph.css',
-    '@/assets/css/index.css'
+    '@/scss/fonts.scss',
+    '@/scss/globals.scss'
   ],
   /*
    ** Plugins to load before mounting the App
@@ -90,9 +89,7 @@ module.exports = {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
-    // Doc: https://github.com/nuxt-community/stylelint-module
-    '@nuxtjs/stylelint-module'
+    '@nuxtjs/eslint-module'
   ],
   /*
    ** Nuxt.js modules
@@ -101,9 +98,14 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/style-resources',
   ],
+  styleResources: {
+    scss: [
+      '~/scss/variables.scss'
+    ]
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

@@ -3,7 +3,7 @@
     <div class="Icarus">
       <Background />
       <div class="Page">
-        <div class="Page__top">
+        <header>
           <Logo />
           <div class="Nav">
             <nuxt-link to="/weather" active-class="isActive" class="Nav__item">
@@ -24,32 +24,20 @@
               <div class="Nav__itemAlert"></div>
             </nuxt-link>
           </div>
-        </div>
-        <div class="Page__content">
+        </header>
+        <main>
           <nuxt />
-        </div>
-        <div class="Page__bottom">
+        </main>
+        <footer>
           <div class="AboutIcarus">
-            <input
-              id="about-trigger"
-              type="checkbox"
-              class="AboutIcarus__input"
-            />
-            <label for="about-trigger" class="AboutIcarus__button">
-              <div class="AboutIcarus__buttonText">About Icarus Project</div>
-              <div class="AboutIcarus__buttonClose">
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 30 30"
-                  class="AboutIcarus__closeIcon"
-                >
-                  <line x1="2" y1="2" x2="30" y2="30"></line>
-                  <line x1="2" y1="30" x2="30" y2="2"></line>
-                </svg>
-              </div>
-            </label>
-            <div class="AboutIcarus__content">
+            <button
+              type="button"
+              class="AboutIcarus__button"
+              @click="showAboutIcarus = true"  
+            >
+              About Icarus Project
+            </button>
+            <Modal v-if="showAboutIcarus" @close="showAboutIcarus = false">
               <div class="AboutIcarus__infoPanel">
                 <h3>About Icarus Project</h3>
                 <p>
@@ -60,18 +48,18 @@
                 </p>
                 <p>
                   <a href="https://twitter.com/azazeln28" target="_blank">
-                    Aitor Moreno-Melcón</a
+                    Aitor Moreno Melcón</a
                   >,
                   <a href="https://twitter.com/mekanoide" target="_blank">
-                    Omar Moreno-Melcón</a
+                    Omar Moreno Melcón</a
                   >
                   and
                   <a href="https://twitter.com/diacritica" target="_blank">
-                    Pablo Ruiz-Múzquiz</a
+                    Pablo Ruiz Múzquiz</a
                   >
                   are its creators, with
                   <a href="https://twitter.com/ghilbrae" target="_blank">
-                    Angela Rivera-Campos</a
+                    Angela Rivera Campos</a
                   >
                   acting as our scientific advisor.
                 </p>
@@ -104,7 +92,7 @@
                   greatly contributed to make this a reality.
                 </p>
               </div>
-            </div>
+            </Modal>
           </div>
           <div class="Controls">
             <a href="#" :class="getAudioClasses()" @click="handleAudioClick">
@@ -176,38 +164,18 @@
               </svg>
             </a>
           </div>
-        </div>
-      </div>
-      <div id="main" class="Loader">
-        <svg viewBox="0 0 55 64" width="55" height="64" class="Loader__spinner">
-          <rect x="0" y="0" width="1" height="64" class="Loader01"></rect>
-          <rect x="6" y="0" width="1" height="64" class="Loader02"></rect>
-          <rect x="12" y="0" width="1" height="64" class="Loader03"></rect>
-          <rect x="18" y="0" width="1" height="64" class="Loader04"></rect>
-          <rect x="24" y="0" width="1" height="64" class="Loader05"></rect>
-          <rect x="30" y="0" width="1" height="64" class="Loader06"></rect>
-          <rect x="36" y="0" width="1" height="64" class="Loader07"></rect>
-          <rect x="42" y="0" width="1" height="64" class="Loader08"></rect>
-          <rect x="48" y="0" width="1" height="64" class="Loader09"></rect>
-          <rect x="54" y="0" width="1" height="64" class="Loader10"></rect>
-        </svg>
+        </footer>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Background from '@/components/Background'
-import Logo from '@/components/Logo'
-
 export default {
-  components: {
-    Background,
-    Logo
-  },
   data() {
     return {
-      audioState: false
+      audioState: false,
+      showAboutIcarus: false
     }
   },
   computed: {
@@ -229,3 +197,165 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+.Page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+
+  header {
+    flex: 0 0 3.5rem;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    margin: 2rem 2rem 0;
+    padding-bottom: 0rem;
+
+    &:before,
+    &:after {
+      top: 0;
+      position: absolute;
+      content: '';
+      width: 2rem;
+      height: 1px;
+      background-color: #ebfaf6;
+      z-index: 101;
+    }
+    &:before {
+      left: 0;
+    }
+    &:after {
+      right: 0;
+    }
+  }
+
+  main {
+    flex: 1 1;
+    display: flex;
+    align-items: stretch;
+  }
+
+  footer {
+    flex: 0 0 3rem;
+    display: flex;
+    align-items: flex-start;
+    padding: 0 2rem;
+  }
+}
+
+
+.Nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+.Nav__item {
+  position: relative;
+  font-size: 1rem;
+  display: flex;
+  height: 2rem;
+  align-items: center;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+  padding: 0 2rem;
+}
+.Nav__itemAlert {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: #eb8947;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.Button--sound {
+  text-transform: uppercase;
+  color: #609f8e;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  
+  .Icon--sound {
+    fill: #609f8e;
+  }
+  .Sound {
+    transform-origin: 50% 50%;
+  }
+  .Button__label {
+    margin-right: 0.5rem;
+  }
+}
+
+.Button--sound.isOn {
+  color: #ebfaf6;
+
+  .Icon--sound {
+    fill: #ebfaf6;
+  }
+
+  .Sound--1 {
+    animation: animSound 1s ease-in-out infinite;
+  }
+  .Sound--2 {
+    animation: animSound 0.9s ease-in-out infinite;
+  }
+  .Sound--3 {
+    animation: animSound 0.7s ease-in-out infinite;
+  }
+  .Sound--4 {
+    animation: animSound 0.2s ease-in-out infinite;
+  }
+}
+
+.Button--sound.isOff .Icon--sound .Sound {
+  transform: scaleY(0.1);
+}
+
+@keyframes animSound {
+  0% {
+    transform: scaleY(0.1);
+    fill: #609f8e;
+  }
+  20% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0.4);
+  }
+  60% {
+    transform: scaleY(0.75);
+  }
+  80% {
+    transform: scaleY(0.2);
+    fill: #609f8e;
+  }
+  100% {
+    transform: scaleY(0.1);
+    fill: #609f8e;
+  }
+}
+
+.AboutIcarus {
+  flex: 1;
+  button {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: $color-base;
+    text-transform: uppercase;
+    outline: none;
+    transition: all 0.25s ease-in-out;
+    &:hover {
+      color: $color-highlight;
+    }
+  }
+}
+
+</style>

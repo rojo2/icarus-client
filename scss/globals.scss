@@ -1,0 +1,299 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+html {
+  width: 100%;
+  height: 100%;
+  background-color: $color-bg;
+  margin: 0;
+  padding: 0;
+}
+body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body,
+label,
+input {
+  color: $color-base;
+  font-family: 'FiraSans';
+  font-weight: 200;
+  line-height: 1.25;
+}
+a {
+  color: #adebda;
+  text-decoration: none;
+  transition: color 0.4s ease-in-out;
+}
+a:hover {
+  color: #ebfaf6;
+  transition: color 0.2s ease-in-out;
+}
+
+h2,
+h3,
+h4 {
+  font-weight: 200;
+  text-transform: uppercase;
+}
+
+h2, h3 {
+  color: $color-accent;
+  margin: 1rem 0 0.5rem;
+}
+
+h4 {
+  color: $color-highlight;
+  margin: 0.5rem 0;
+}
+p {
+  margin: 0 0 2rem;
+  line-height: 1.4;
+}
+::-webkit-scrollbar {
+  width: 1px;
+}
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track-piece {
+  display: none;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(96,159,142,0.2);
+}
+#__nuxt,
+#__layout,
+#Application,
+.Icarus {
+  width: 100%;
+  height: 100%;
+}
+
+section {
+  flex: 1;
+  display: flex;
+}
+
+.Panel__menu {
+  flex: 0 0 auto;
+  font-size: 0.875rem;
+  display: flex;
+  padding: 0.25rem 0;
+  
+  a {
+    display: block;
+    text-transform: uppercase;
+    padding: 0 0.75rem;
+    height: 2rem;
+    margin-left: 0.25rem;
+    display: flex;
+    align-items: center;
+  }
+}
+
+
+a.isActive {
+  background-color: rgba(96,159,142,0.2);
+  pointer-events: none;
+  color: #ebfaf6;
+  border-radius: 0.125rem;
+  box-shadow: inset 0 0 1rem rgba(235,250,246,0.06);
+}
+
+a:hover {
+  color: #ebfaf6;
+  border-radius: 0.125rem;
+  animation: animHover 0.1s ease-in-out;
+  background-color: rgba(96,159,142,0.2);
+}
+
+@keyframes animHover {
+  0% {
+    box-shadow: inset 0 0 0 #ebfaf6;
+    background-color: #000;
+  }
+  66% {
+    box-shadow: inset 0 -2rem 0 #ebfaf6;
+    color: #000;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 rgba(96,159,142,0.2);
+    background-color: #000;
+  }
+}
+
+.Image--notFound {
+  stroke-width: 1;
+  stroke: rgba(96,159,142,0.2);
+  fill: transparent;
+}
+
+/*
+ * Graph
+ */
+
+ .Graph {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.Graph__content {
+  flex: 1;
+  position: relative;
+  margin: 1rem 0 2rem;
+}
+.Graph__legends {
+  flex: 0 0 2rem;
+  display: flex;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(96,159,142,0.2);
+}
+.Graph__legend {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+}
+.Graph__legendColor--particle10,
+.Graph__legendColor--particle100,
+.Graph__legendColor--particles1,
+.Graph__legendColor--particles2,
+.Graph__legendColor--particles3,
+.Graph__legendColor--solarWind1,
+.Graph__legendColor--solarWind2,
+.Graph__legendColor--monthly,
+.Graph__legendColor--smoothedMonthly,
+.Graph__legendColor--predictedMonthly {
+  width: 1rem;
+  height: 0.5rem;
+  margin-right: 0.5rem;
+}
+.Graph__legendColor--particle10 {
+  background-color: #eb8947;
+}
+.Graph__legendColor--particle100 {
+  background-color: #eb5d47;
+}
+.Graph__legendColor--solarWind1 {
+  background-color: #eb8947;
+}
+.Graph__legendColor--solarWind2 {
+  background-color: #e0eb47;
+}
+.Graph__legendColor--monthly {
+  background-color: rgba(224,235,71,0.3);
+}
+.Graph__legendColor--smoothedMonthly {
+  background-color: #e0eb47;
+}
+.Graph__legendColor--predictedMonthly {
+  background-color: #eb8947;
+}
+.Graph__legendLabel {
+  font-size: 0.875rem;
+}
+
+.Graph__image {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.Graph__line {
+  fill: transparent;
+  stroke: #eb8947;
+}
+.Graph__line.Graph__color0 {
+  fill: transparent;
+  stroke: #eb8947;
+}
+.Graph__line.Graph__color1 {
+  fill: transparent;
+  stroke: #eb5d47;
+}
+.Graph__area {
+  fill: rgba(235,137,71,0.06);
+}
+.Graph__area.Graph__color0 {
+  fill: rgba(235,137,71,0.06);
+}
+.Graph__area.Graph__color1 {
+  fill: rgba(235,93,71,0.06);
+}
+.Graph__axis {
+  fill: transparent;
+}
+.Graph__text {
+  fill: #609f8e;
+}
+.tick line {
+  stroke: rgba(96,159,142,0.1);
+}
+.tick text {
+  font-family: 'FiraSans';
+  font-weight: 200;
+  font-size: 0.75rem;
+  stroke: #609f8e;
+}
+.Graph__smoothed {
+  stroke: #e0eb47;
+}
+.Graph__observed {
+  stroke: rgba(224,235,71,0.3);
+}
+.Graph__predicted {
+  stroke: #eb8947;
+}
+.Graph__sun {
+  fill: transparent;
+}
+.Graph__sunspot {
+  stroke: #ebfaf6;
+  /* vector-effect: non-scaling-stroke; */
+  stroke-width: 1px;
+  fill: transparent;
+}
+.Graph__dots {
+  fill: transparent;
+}
+.Graph__density {
+  fill: #eb8947;
+}
+.Graph__temperature {
+  fill: #e0eb47;
+}
+.Graph__timeline {
+  stroke: #609f8e;
+}
+.Graph__sunspotInfo {
+  padding: 1rem;
+  fill: #000;
+  cursor: pointer;
+}
+.Graph__sunspotText {
+  font-family: 'FiraSans';
+  font-size: 1rem;
+  fill: #ebfaf6;
+  opacity: 0;
+  transform: translate(-64px, -128px);
+  transition: all 0.3s ease-out;
+}
+.Graph__sunspotInfoLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+.Graph__sunspotInfo:hover .Graph__sunspotText {
+  display: block;
+  opacity: 1;
+  transition: all 0.3s ease-in;
+}

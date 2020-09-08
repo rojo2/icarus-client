@@ -1,9 +1,8 @@
 <template>
   <section class="Weather isActive">
-    <div class="Weather__EITFilters">
-      <div class="Panel__header">
-        <div class="Panel__title">EIT Filters</div>
-        <div class="Panel__menu">
+    <Panel class="Weather__EITFilters" title="EIT Filters">
+      <template v-slot:menu>
+        <nav class="Panel__menu">
           <nuxt-link
             :to="{
               path: '/weather',
@@ -13,10 +12,9 @@
               }
             }"
             exact-active-class="isActive"
-            class="Panel__menuItem"
           >
-            <div class="Value">171</div>
-            <div class="Unit">Å</div>
+            <span class="Value">171</span>
+            <span class="Unit">Å</span>
           </nuxt-link>
           <nuxt-link
             :to="{
@@ -27,10 +25,9 @@
               }
             }"
             exact-active-class="isActive"
-            class="Panel__menuItem"
           >
-            <div class="Value">193</div>
-            <div class="Unit">Å</div>
+            <span class="Value">193</span>
+            <span class="Unit">Å</span>
           </nuxt-link>
           <nuxt-link
             :to="{
@@ -41,10 +38,9 @@
               }
             }"
             exact-active-class="isActive"
-            class="Panel__menuItem"
           >
-            <div class="Value">211</div>
-            <div class="Unit">Å</div>
+            <span class="Value">211</span>
+            <span class="Unit">Å</span>
           </nuxt-link>
           <nuxt-link
             :to="{
@@ -55,10 +51,9 @@
               }
             }"
             exact-active-class="isActive"
-            class="Panel__menuItem"
           >
-            <div class="Value">304</div>
-            <div class="Unit">Å</div>
+            <span class="Value">304</span>
+            <span class="Unit">Å</span>
           </nuxt-link>
           <nuxt-link
             :to="{
@@ -69,20 +64,16 @@
               }
             }"
             exact-active-class="isActive"
-            class="Panel__menuItem"
           >
             <div class="Value">HMI</div>
           </nuxt-link>
-        </div>
-      </div>
+        </nav>
+      </template>
       <EIT :filter="$route.query.filter" @change="handleTimelineChange" />
-    </div>
-    <div class="Weather__fluxes">
-      <div class="Panel__header">
-        <div class="Panel__title">
-          Fluxes
-        </div>
-        <div class="Panel__menu">
+    </Panel>
+    <Panel class="Weather__fluxes" title="Fluxes">
+      <template v-slot:menu>
+        <nav class="Panel__menu">
           <nuxt-link
             :to="{
               path: '/weather',
@@ -135,40 +126,49 @@
           >
             X-Ray Flux
           </nuxt-link>
+        </nav>
+      </template>
+      <Loader :is-loading="isLoading" />
+      <div class="Graph">
+        <div ref="container" class="Graph__content">
+          <!-- {this.renderGraph(flux)} -->
         </div>
+        <!-- {this.renderGraphLegend(flux)} -->
       </div>
-      <div class="Panel__content">
-        <Loader :is-loading="isLoading" />
-        <div class="Graph">
-          <div ref="container" class="Graph__content">
-            <!-- {this.renderGraph(flux)} -->
-          </div>
-          <!-- {this.renderGraphLegend(flux)} -->
-        </div>
-      </div>
-      <div class="Panel__footer"></div>
-    </div>
+    </Panel>
   </section>
 </template>
 
 <script>
-import Loader from '@/components/Loader'
-import EIT from '@/components/EIT'
-
 export default {
-  components: {
-    Loader,
-    EIT
-  },
   data() {
     return {
       isLoading: false
     }
   },
   methods: {
-    handleTimelineChange(e) {
+    handleTimelineChange () {
       // console.log(e)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+.Weather {
+  flex: 0 0 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.Weather__EITFilters {
+  flex: 0 1 40%;
+  display: flex;
+}
+
+.Weather__fluxes {
+  flex: 0 0 60%;
+}
+
+</style>
