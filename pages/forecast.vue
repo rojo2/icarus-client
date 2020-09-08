@@ -184,7 +184,6 @@
           </nuxt-link>
         </nav>
       </template>
-      <!-- {this.renderRightPanel()} -->
     </Panel>
   </section>
 </template>
