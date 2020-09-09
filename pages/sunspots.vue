@@ -147,12 +147,8 @@ export default {
     Loader
   },
   async asyncData() {
-    const dateMin = moment()
-      .subtract(1, 'days')
-      .format('YYYY-MM-DD')
-    const dateMax = moment()
-      .add(1, 'days')
-      .format('YYYY-MM-DD')
+    const dateMin = moment().subtract(1, 'days').format('YYYY-MM-DD')
+    const dateMax = moment().add(1, 'days').format('YYYY-MM-DD')
     const images = await API.getImageChannels({
       channeltype: 5,
       date_min: dateMin,

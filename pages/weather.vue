@@ -79,9 +79,7 @@
     </div>
     <div class="Weather__fluxes">
       <div class="Panel__header">
-        <div class="Panel__title">
-          Fluxes
-        </div>
+        <div class="Panel__title">Fluxes</div>
         <div class="Panel__menu">
           <nuxt-link
             :to="{
