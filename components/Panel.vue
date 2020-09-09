@@ -1,16 +1,14 @@
 <template>
-  <transition name="panel" appear>
-    <div class="Panel">
-      <header>
-        <h3 class="Panel__title">{{ title }}</h3>
-        <slot name="menu" />
-      </header>
-      <div class="Panel__content">
-        <slot />
-      </div>
-      <footer />
+  <div class="Panel">
+    <header>
+      <h3 class="Panel__title">{{ title }}</h3>
+      <slot name="menu" />
+    </header>
+    <div class="Panel__content">
+      <slot />
     </div>
-  </transition>
+    <footer />
+  </div>
 </template>
 
 <script>
@@ -106,14 +104,6 @@ footer:before {
 }
 footer:after {
   right: -2px;
-}
-
-.panel-enter-active, .panel-leave-active {
-  transition: all 0.5s ease-in-out;
-}
-.panel-enter, .panel-leave-to {
-  opacity: 0;
-  transform: perspective(1200px) rotateX(-45deg);
 }
 
 </style>

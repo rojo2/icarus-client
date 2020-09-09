@@ -1,123 +1,127 @@
 <template>
   <section class="SolarCycle isActive">
-    <Panel class="SolarCycle__graph" title="Solar Cycle">
-      <Loader :is-loading="isLoading" />
-      <div class="Graph">
-        <div ref="container" class="Graph__content">
-          <!-- {this.renderGraph()} -->
-          <svg
-            class="Graph__image"
-            width="100%"
-            height="100%"
-            :viewBox="viewBox"
+    <transition name="left" appear>
+      <Panel class="SolarCycle__graph" title="Solar Cycle">
+        <Loader :is-loading="isLoading" />
+        <div class="Graph">
+          <div ref="container" class="Graph__content">
+            <!-- {this.renderGraph()} -->
+            <svg
+              class="Graph__image"
+              width="100%"
+              height="100%"
+              :viewBox="viewBox"
+            >
+              <g :transform="transform">
+                <path class="Graph__line Graph__smoothed" :d="smoothedPath" />
+                <path class="Graph__line Graph__predicted" :d="predictedPath" />
+                <path class="Graph__line Graph__observed" :d="observedPath" />
+                <g class="Graph__axis" :transform="xTransform">
+                  {{ xTicks }}
+                </g>
+                <g class="Graph__axis">
+                  {{ yTicks }}
+                  <text
+                    class="Graph__text"
+                    transform="rotate(-90)"
+                    :style="yStyle"
+                  >
+                    MeV
+                  </text>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <div class="Graph__legends">
+            <a href="#" class="Graph__legend">
+              <div class="Graph__legendColor--monthly"></div>
+              <div class="Graph__legendLabel">Monthly Values</div>
+            </a>
+            <a href="#" class="Graph__legend">
+              <div class="Graph__legendColor--smoothedMonthly"></div>
+              <div class="Graph__legendLabel">Smoothed Monthly Values</div>
+            </a>
+            <a href="#" class="Graph__legend">
+              <div class="Graph__legendColor--predictedMonthly"></div>
+              <div class="Graph__legendLabel">Predicted Monthly Values</div>
+            </a>
+          </div>
+        </div>
+      </Panel>
+    </transition>
+    <transition name="right" appear>
+      <PanelText class="SolarCycle__description" title="The Solar Cycle">
+        <p>
+          The 11-year sunspot or solar cycle is a rhythmic waxing and waning
+          of the number of dark sunspots on the visible disk of the Sun. It
+          comes from the "winding-up" of the solar magnetic field during
+          which the magnetic field gradually decays and then finally
+          undergoes a total magnetic reversal, which is when the magnetic
+          poles flip. As the magnetic field becomes gradually more entwined
+          towards solar maximum the surface fields of the Sun becomes more
+          and more wrapped up. This increases the activity on the surface of
+          the Sun, seen as sunspots (regions of highly complex and intense
+          magnetic fields) and the more frequent occurrence of solar flares
+          and coronal mass ejections.
+        </p>
+        <p>
+          The Sun is brighter at EUV and X-ray wavelengths during solar
+          maximum then at solar minimum. This global brightening has Space
+          Weather consequences. Impulsive events, such as coronal mass
+          ejections, solar flares, or high speed streams in the solar wind,
+          occur on timescales of minutes to hours, or even days. Delayed
+          sources of space weather, such as geomagnetic storms, start after
+          the solar signal that triggers the storm has passed the Earth and
+          can last for days to weeks. Galactic cosmic rays are reduced by
+          solar activity and have more rapid variations caused by CMEs.
+          Interplanetary dust particles are a continuous source of
+          easily-ionized meteoric material to the Earth. Impacts of
+          asteroids and comets are infrequent, catastrophic events.
+        </p>
+        <h3>Recent cycles</h3>
+        <h4>Cycle 25</h4>
+        <p>
+          There are many, often mutually contradictory predictions, based on
+          different methods, for the solar cycle 25, ranging from very weak
+          to moderate magnitude. At present, no definite prediction can be
+          made.
+        </p>
+        <h4>Cycle 24</h4>
+        <p>
+          The current solar cycle began on January 4, 2008, with minimal
+          activity until early 2010. It is on track to have the lowest
+          recorded sunspot activity since accurate records began in 1750.
+          The cycle featured a "double-peaked" solar maximum. The first peak
+          was reached 99 in 2011 and the second in early 2014 at 101.
+        </p>
+        <h4>Cycle 23</h4>
+        <p>
+          This cycle lasted 11.6 years, beginning in May 1996 and ending in
+          January 2008. The maximum smoothed sunspot number (monthly number
+          of sunspots averaged over a twelve-month period) observed during
+          the solar cycle was 120.8 (March 2000), and the minimum was 1.7. A
+          total of 805 days had no sunspots during this cycle.
+        </p>
+        <p>
+          Sources: Source: WDC-SILSO, Royal Observatory of Belgium, Brussels
+          <a
+            href="http://sidc.be/silso/home"
+            target="_blank"
+            rel="noopener"
           >
-            <g :transform="transform">
-              <path class="Graph__line Graph__smoothed" :d="smoothedPath" />
-              <path class="Graph__line Graph__predicted" :d="predictedPath" />
-              <path class="Graph__line Graph__observed" :d="observedPath" />
-              <g class="Graph__axis" :transform="xTransform">
-                {{ xTicks }}
-              </g>
-              <g class="Graph__axis">
-                {{ yTicks }}
-                <text
-                  class="Graph__text"
-                  transform="rotate(-90)"
-                  :style="yStyle"
-                >
-                  MeV
-                </text>
-              </g>
-            </g>
-          </svg>
-        </div>
-        <div class="Graph__legends">
-          <a href="#" class="Graph__legend">
-            <div class="Graph__legendColor--monthly"></div>
-            <div class="Graph__legendLabel">Monthly Values</div>
+            http://sidc.be/silso/home
           </a>
-          <a href="#" class="Graph__legend">
-            <div class="Graph__legendColor--smoothedMonthly"></div>
-            <div class="Graph__legendLabel">Smoothed Monthly Values</div>
+          and
+          <a
+            href="https://en.wikipedia.org/wiki/Solar_cycle"
+            target="_blank"
+            rel="noopener"
+          >
+            Wikipedia
           </a>
-          <a href="#" class="Graph__legend">
-            <div class="Graph__legendColor--predictedMonthly"></div>
-            <div class="Graph__legendLabel">Predicted Monthly Values</div>
-          </a>
-        </div>
-      </div>
-    </Panel>
-    <PanelText class="SolarCycle__description" title="The Solar Cycle">
-      <p>
-        The 11-year sunspot or solar cycle is a rhythmic waxing and waning
-        of the number of dark sunspots on the visible disk of the Sun. It
-        comes from the "winding-up" of the solar magnetic field during
-        which the magnetic field gradually decays and then finally
-        undergoes a total magnetic reversal, which is when the magnetic
-        poles flip. As the magnetic field becomes gradually more entwined
-        towards solar maximum the surface fields of the Sun becomes more
-        and more wrapped up. This increases the activity on the surface of
-        the Sun, seen as sunspots (regions of highly complex and intense
-        magnetic fields) and the more frequent occurrence of solar flares
-        and coronal mass ejections.
-      </p>
-      <p>
-        The Sun is brighter at EUV and X-ray wavelengths during solar
-        maximum then at solar minimum. This global brightening has Space
-        Weather consequences. Impulsive events, such as coronal mass
-        ejections, solar flares, or high speed streams in the solar wind,
-        occur on timescales of minutes to hours, or even days. Delayed
-        sources of space weather, such as geomagnetic storms, start after
-        the solar signal that triggers the storm has passed the Earth and
-        can last for days to weeks. Galactic cosmic rays are reduced by
-        solar activity and have more rapid variations caused by CMEs.
-        Interplanetary dust particles are a continuous source of
-        easily-ionized meteoric material to the Earth. Impacts of
-        asteroids and comets are infrequent, catastrophic events.
-      </p>
-      <h3>Recent cycles</h3>
-      <h4>Cycle 25</h4>
-      <p>
-        There are many, often mutually contradictory predictions, based on
-        different methods, for the solar cycle 25, ranging from very weak
-        to moderate magnitude. At present, no definite prediction can be
-        made.
-      </p>
-      <h4>Cycle 24</h4>
-      <p>
-        The current solar cycle began on January 4, 2008, with minimal
-        activity until early 2010. It is on track to have the lowest
-        recorded sunspot activity since accurate records began in 1750.
-        The cycle featured a "double-peaked" solar maximum. The first peak
-        was reached 99 in 2011 and the second in early 2014 at 101.
-      </p>
-      <h4>Cycle 23</h4>
-      <p>
-        This cycle lasted 11.6 years, beginning in May 1996 and ending in
-        January 2008. The maximum smoothed sunspot number (monthly number
-        of sunspots averaged over a twelve-month period) observed during
-        the solar cycle was 120.8 (March 2000), and the minimum was 1.7. A
-        total of 805 days had no sunspots during this cycle.
-      </p>
-      <p>
-        Sources: Source: WDC-SILSO, Royal Observatory of Belgium, Brussels
-        <a
-          href="http://sidc.be/silso/home"
-          target="_blank"
-          rel="noopener"
-        >
-          http://sidc.be/silso/home
-        </a>
-        and
-        <a
-          href="https://en.wikipedia.org/wiki/Solar_cycle"
-          target="_blank"
-          rel="noopener"
-        >
-          Wikipedia
-        </a>
-      </p>
-    </PanelText>
+        </p>
+      </PanelText>
+    </transition>
   </section>
 </template>
 

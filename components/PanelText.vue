@@ -1,16 +1,14 @@
 <template>
-  <transition name="panel">
-    <div class="Panel">
-      <div class="Panel__content">
-        <div class="ScrolledContent">
-          <h2>{{ title }}</h2>
-          <div class="Text__body">
-            <slot />
-          </div>
+  <div class="Panel">
+    <div class="Panel__content">
+      <div class="ScrolledContent">
+        <h2>{{ title }}</h2>
+        <div class="Text__body">
+          <slot />
         </div>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
@@ -82,14 +80,6 @@ h2 {
   padding-right: 0.5rem;
   overflow-y: auto;
   overflow-x: hidden;
-}
-
-.panel-enter-active, .panel-leave-active {
-  transition: all 0.5s ease-in-out;
-}
-.panel-enter, .panel-leave-to {
-  opacity: 0;
-  transform: perspective(1200px) rotateX(-45deg);
 }
 
 </style>
