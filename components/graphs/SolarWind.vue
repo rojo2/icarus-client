@@ -106,7 +106,8 @@ export default {
         .map((value, index, list) => {
           const x = 16
           const y = utils.interpolate(
-            (value - this.yTemperatureMin) / (this.yTemperatureMax - this.yTemperatureMin),
+            (value - this.yTemperatureMin) /
+              (this.yTemperatureMax - this.yTemperatureMin),
             this.height,
             0
           )
