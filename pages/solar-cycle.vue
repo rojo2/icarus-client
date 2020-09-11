@@ -8,7 +8,6 @@
         <Loader :is-loading="isLoading" />
         <div class="Graph">
           <div ref="container" class="Graph__content">
-            <!-- {this.renderGraph()} -->
             <svg
               class="Graph__image"
               width="100%"
@@ -20,10 +19,28 @@
                 <path class="Graph__line Graph__predicted" :d="predictedPath" />
                 <path class="Graph__line Graph__observed" :d="observedPath" />
                 <g class="Graph__axis" :transform="xTransform">
-                  {{ xTicks }}
+                  <g
+                    v-for="tick in xTicks"
+                    :key="tick.key"
+                    class="tick"
+                    :transform="tick.transform"
+                  >
+                    <text x="0" y="0" style="text-anchor: center">
+                      {{ tick.value.toFixed(0) }}
+                    </text>
+                  </g>
                 </g>
                 <g class="Graph__axis">
-                  {{ yTicks }}
+                  <g
+                    v-for="tick in yTicks"
+                    :key="tick.key"
+                    class="tick"
+                    :transform="tick.transform"
+                  >
+                    <text x="0" y="0" style="text-anchor: end">
+                      {{ tick.value.toExponential(1) }}
+                    </text>
+                  </g>
                   <text
                     class="Graph__text"
                     transform="rotate(-90)"
@@ -149,18 +166,14 @@ export default {
     const observed = await API.getSunspots({ sunspottype: 3 })
     return {
       isLoading: false,
-      smoothed: smoothed.data,
-      predicted: predicted.data,
-      observed: observed.data
+      smoothed: utils.time(smoothed.data, 'date', 'time'),
+      predicted: utils.time(predicted.data, 'date', 'time'),
+      observed: utils.time(observed.data, 'date', 'time')
     }
   },
   data() {
     return {
       isLoading: false,
-      width: 0,
-      height: 0,
-      sWidth: 0,
-      sHeight: 0,
       margin: {
         top: 0,
         right: 0,
@@ -182,10 +195,58 @@ export default {
     xTransform() {
       return `translate(0,${this.mHeight})`
     },
+    xTicks() {
+      return utils
+        .ticks(this.minTime, this.maxTime)
+        .map((value, index, list) => {
+          const x = utils.interpolate(index / list.length, 0, this.mWidth)
+          const y = 24
+          const transform = `translate(${x},${y})`
+          return {
+            x,
+            y,
+            value,
+            transform
+          }
+        })
+    },
+    yTicks() {
+      return utils.ticks(this.minY, this.maxY).map((value, index, list) => {
+        const x = -16
+        const y = utils.interpolate(index / list.length, this.mHeight, 0)
+        const transform = `translate(${x},${y})`
+        return {
+          x,
+          y,
+          value,
+          transform
+        }
+      })
+    },
     yStyle() {
       return {
         textAnchor: 'end'
       }
+    },
+    width() {
+      if (!this.$refs.container) {
+        return 1000
+      }
+      const { width } = this.$refs.container.getBoundingClientRect()
+      return width
+    },
+    height() {
+      if (!this.$refs.container) {
+        return 700
+      }
+      const { height } = this.$refs.container.getBoundingClientRect()
+      return height
+    },
+    sWidth() {
+      return this.width + this.margin.left
+    },
+    sHeight() {
+      return this.height + this.margin.top
     },
     mWidth() {
       return this.width - (this.margin.left + this.margin.right)
@@ -210,6 +271,12 @@ export default {
         [this.smoothed, this.predicted, this.observed],
         'value'
       )
+    },
+    minTime() {
+      return new Date(this.minX).getFullYear()
+    },
+    maxTime() {
+      return new Date(this.maxX).getFullYear()
     },
     smoothedPath() {
       return utils.path(
@@ -256,21 +323,6 @@ export default {
         this.mHeight
       )
     }
-  },
-  mounted() {
-    const { width, height } = this.$refs.container.getBoundingClientRect()
-    const {
-      left: marginLeft,
-      top: marginTop,
-      bottom: marginBottom,
-      right: marginRight
-    } = this.margin
-    this.width = width
-    this.height = height
-    this.mWidth = width - (marginLeft + marginRight)
-    this.mHeight = height - (marginTop + marginBottom)
-    this.sWidth = width + marginLeft
-    this.sHeight = height + marginTop
   }
 }
 </script>

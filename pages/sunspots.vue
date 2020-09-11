@@ -19,7 +19,7 @@
                   v-if="image"
                   :width="width"
                   :height="height"
-                  :xlinkHref="image.url"
+                  :xlink:href="image"
                 />
                 <g v-else>
                   <circle
@@ -137,60 +137,72 @@
 </template>
 
 <script>
-import moment from 'moment'
-
 import API from '@/api'
 import Loader from '@/components/Loader'
+import utils from '@/utils'
 
 export default {
   components: {
     Loader
   },
   async asyncData() {
-    const dateMin = moment().subtract(1, 'days').format('YYYY-MM-DD')
-    const dateMax = moment().add(1, 'days').format('YYYY-MM-DD')
+    const minDateFormatted = utils.daysFrom(-1)
+    const maxDateFormatted = utils.daysFrom(1)
+    const minDateFormattedImage = utils.daysFrom(-1)
+    const maxDateFormattedImage = utils.daysFrom(1)
     const images = await API.getImageChannels({
       channeltype: 5,
-      date_min: dateMin,
-      date_max: dateMax
+      date_min: minDateFormattedImage,
+      date_max: maxDateFormattedImage
     })
     const sunspots = await API.getSunspotRegions({
-      date_min: dateMin,
-      date_max: dateMax
+      date_min: minDateFormatted,
+      date_max: maxDateFormatted
     })
     return {
       isLoading: false,
-      sunspots: sunspots.data,
       images: images.data,
-      image: null
+      sunspots: sunspots.data
     }
   },
   data() {
     return {
       isLoading: true,
       sunspots: [],
-      images: [],
-      image: null,
-      width: 0,
-      height: 0,
-      halfWidth: 0,
-      halfHeight: 0,
-      radius: 0
+      images: []
     }
   },
   computed: {
     viewBox() {
       return `0 0 ${this.width} ${this.height}`
+    },
+    width() {
+      if (!this.$refs.container) {
+        return 1000
+      }
+      const { width } = this.$refs.container.getBoundingClientRect()
+      return width
+    },
+    height() {
+      if (!this.$refs.container) {
+        return 700
+      }
+      const { height } = this.$refs.container.getBoundingClientRect()
+      return height
+    },
+    halfWidth() {
+      return this.width * 0.5
+    },
+    halfHeight() {
+      return this.height * 0.5
+    },
+    radius() {
+      return Math.min(this.halfWidth, this.halfHeight) - 55
+    },
+    image() {
+      const [image] = this.images
+      return image.image
     }
-  },
-  mounted() {
-    const { min } = Math
-    const { width, height } = this.$refs.container.getBoundingClientRect()
-    this.width = width
-    this.height = height
-    this.halfWidth = width >> 1
-    this.halfHeight = height >> 1
-    this.radius = min(this.width, this.height) - 55
   }
 }
 </script>

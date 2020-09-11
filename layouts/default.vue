@@ -178,20 +178,6 @@
           </div>
         </div>
       </div>
-      <div id="main" class="Loader">
-        <svg viewBox="0 0 55 64" width="55" height="64" class="Loader__spinner">
-          <rect x="0" y="0" width="1" height="64" class="Loader01"></rect>
-          <rect x="6" y="0" width="1" height="64" class="Loader02"></rect>
-          <rect x="12" y="0" width="1" height="64" class="Loader03"></rect>
-          <rect x="18" y="0" width="1" height="64" class="Loader04"></rect>
-          <rect x="24" y="0" width="1" height="64" class="Loader05"></rect>
-          <rect x="30" y="0" width="1" height="64" class="Loader06"></rect>
-          <rect x="36" y="0" width="1" height="64" class="Loader07"></rect>
-          <rect x="42" y="0" width="1" height="64" class="Loader08"></rect>
-          <rect x="48" y="0" width="1" height="64" class="Loader09"></rect>
-          <rect x="54" y="0" width="1" height="64" class="Loader10"></rect>
-        </svg>
-      </div>
     </div>
   </div>
 </template>
