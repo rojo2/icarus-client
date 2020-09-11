@@ -19,7 +19,11 @@
             >
               <div class="Nav__itemLabel">Solar cycle</div>
             </nuxt-link>
-            <nuxt-link to="/forecast" active-class="isActive" class="Nav__item">
+            <nuxt-link
+              to="/forecast?show=forecast"
+              active-class="isActive"
+              class="Nav__item"
+            >
               <div class="Nav__itemLabel">Forecast</div>
               <div class="Nav__itemAlert"></div>
             </nuxt-link>
