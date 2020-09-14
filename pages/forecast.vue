@@ -192,7 +192,6 @@
   </section>
 </template>
 
-
 <style lang="scss" scoped>
 
 .Forecast__alerts {
