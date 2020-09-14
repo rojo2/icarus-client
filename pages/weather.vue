@@ -139,7 +139,7 @@
         <Loader :is-loading="isLoading" />
         <div class="Graph">
           <div ref="container" class="Graph__content">
-            <Graph>
+            <Graph :value="value">
               <SolarWind
                 v-if="$route.query.flux === 'solar-wind' && flux"
                 :data="flux"
@@ -158,7 +158,7 @@
               />
             </Graph>
           </div>
-          <GraphLegend :data="flux" />
+          <GraphLegend :data="flux[2]" />
         </div>
       </div>
       <div class="Panel__footer"></div>
@@ -266,7 +266,8 @@ export default {
   },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      value: 0
     }
   },
   computed: {
@@ -315,8 +316,8 @@ export default {
           break
       }
     },
-    handleTimelineChange(e) {
-      // console.log(e)
+    handleTimelineChange(value) {
+      this.value = value
     }
   }
 }

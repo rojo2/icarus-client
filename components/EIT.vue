@@ -206,7 +206,7 @@ export default {
       }
       this.timeoutID = setTimeout(this.handleTimeout, timeout)
     },
-    loadImages(filter) {
+    async loadImages(filter) {
       if (this.filters[filter] && this.filters[filter].length > 0) {
         return Promise.resolve(this.filters[filter])
       }
@@ -218,47 +218,48 @@ export default {
       this.loaded = this.errored = this.total = 0
 
       const minDate = utils.daysFrom(-7)
-      return API.getImageChannels({
+      const res = await API.getImageChannels({
         channeltype: filter,
         date_min: minDate
       })
-        .then((res) => {
-          const images = res.data
-          this.total = images.length
-          utils.time(images)
-          const startDate = new Date(utils.min(images, 'time'))
-          const endDate = new Date(utils.max(images, 'time'))
-          this.data = images
-          this.startDate = startDate
-          this.endDate = endDate
-          return Promise.all(
-            images.map((image) => {
-              return new Promise((resolve, reject) => {
-                function handler(e) {
-                  if (e.type === 'load') {
-                    this.loaded++
-                    return resolve(e.target)
-                  }
-                  this.errored++
-                  return reject(e)
-                }
 
-                // TODO: Esto molaría pasarlo a un helper
-                const img = new Image()
-                img.addEventListener('load', handler)
-                img.addEventListener('error', handler)
-                img.addEventListener('abort', handler)
-                img.crossOrigin = 'anonymous'
-                img.src = image.image
-              })
-            })
-          )
+      const imageData = res.data
+      this.total = imageData.length
+
+      const timedImageData = utils.time(imageData)
+
+      const startDate = new Date(utils.min(timedImageData, 'time'))
+      const endDate = new Date(utils.max(timedImageData, 'time'))
+
+      this.data = timedImageData
+      this.startDate = startDate
+      this.endDate = endDate
+
+      const images = await Promise.all(
+        timedImageData.map((image) => {
+          return new Promise((resolve, reject) => {
+            function handler(e) {
+              if (e.type === 'load') {
+                this.loaded++
+                return resolve(e.target)
+              }
+              this.errored++
+              return reject(e)
+            }
+
+            // TODO: Esto molaría pasarlo a un helper
+            const img = new Image()
+            img.addEventListener('load', handler)
+            img.addEventListener('error', handler)
+            img.addEventListener('abort', handler)
+            img.crossOrigin = 'anonymous'
+            img.src = image.image
+          })
         })
-        .then((images) => {
-          this.filters[filter] = images
-          this.isLoading = false
-          return images
-        })
+      )
+
+      this.filters[filter] = images
+      this.isLoading = false
     }
   }
 }
