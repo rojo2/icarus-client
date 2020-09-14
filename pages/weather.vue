@@ -140,7 +140,22 @@
         <div class="Graph">
           <div ref="container" class="Graph__content">
             <Graph>
-              <SolarWind />
+              <SolarWind
+                v-if="$route.query.flux === 'solar-wind' && flux"
+                :data="flux"
+              />
+              <ProtonFlux
+                v-else-if="$route.query.flux === 'particle' && flux"
+                :data="flux"
+              />
+              <ElectronFlux
+                v-else-if="$route.query.flux === 'electron' && flux"
+                :data="flux"
+              />
+              <XrayFlux
+                v-else-if="$route.query.flux === 'xray' && flux"
+                :data="flux"
+              />
             </Graph>
           </div>
           <GraphLegend :data="flux" />
@@ -160,6 +175,9 @@ import EIT from '@/components/EIT'
 import GraphLegend from '@/components/GraphLegend'
 import Graph from '@/components/Graph'
 import SolarWind from '@/components/graphs/SolarWind'
+import ProtonFlux from '@/components/graphs/ProtonFlux'
+import ElectronFlux from '@/components/graphs/ElectronFlux'
+import XrayFlux from '@/components/graphs/XrayFlux'
 
 async function getSolarWind() {
   const minDateFormatted = utils.daysFrom(-7)
@@ -168,7 +186,9 @@ async function getSolarWind() {
       date_min: minDateFormatted
     })
   ])
-  return res.map((res) => res.data)
+  return res.map((res) => {
+    return utils.time(res.data)
+  })
 }
 
 async function getProtonFlux() {
@@ -184,7 +204,9 @@ async function getProtonFlux() {
     }),
     API.getProtonFluxTypes()
   ])
-  return res.map((res) => res.data)
+  return res.map((res) => {
+    return utils.time(res.data)
+  })
 }
 
 async function getElectronFlux() {
@@ -200,7 +222,9 @@ async function getElectronFlux() {
     }),
     API.getElectronFluxTypes()
   ])
-  return res.map((res) => res.data)
+  return res.map((res) => {
+    return utils.time(res.data)
+  })
 }
 
 async function getXrayFlux() {
@@ -216,40 +240,29 @@ async function getXrayFlux() {
     }),
     API.getXrayFluxTypes()
   ])
-  return res.map((res) => res.data)
+  return res.map((res) => {
+    return utils.time(res.data)
+  })
 }
 
 export default {
   components: {
     SolarWind,
+    ProtonFlux,
+    ElectronFlux,
+    XrayFlux,
     Graph,
     GraphLegend,
     Loader,
     EIT
   },
-  async asyncData(context) {
-    const asyncData = {
-      solarWind: null,
-      protonFlux: null,
-      electronFlux: null,
-      xrayFlux: null
+  async asyncData() {
+    return {
+      solarWind: await getSolarWind(),
+      protonFlux: await getProtonFlux(),
+      electronFlux: await getElectronFlux(),
+      xrayFlux: await getXrayFlux()
     }
-    switch (context.route.query.flux) {
-      default:
-      case 'solar-wind':
-        asyncData.solarWind = await getSolarWind()
-        break
-      case 'particle':
-        asyncData.protonFlux = await getProtonFlux()
-        break
-      case 'electron':
-        asyncData.electronFlux = await getElectronFlux()
-        break
-      case 'x-ray':
-        asyncData.xrayFlux = await getXrayFlux()
-        break
-    }
-    return asyncData
   },
   data() {
     return {
@@ -267,7 +280,7 @@ export default {
           return this.protonFlux
         case 'electron':
           return this.electronFlux
-        case 'x-ray':
+        case 'xray':
           return this.xrayFlux
       }
     }
@@ -297,7 +310,7 @@ export default {
         case 'electron':
           this.loadElectronFlux()
           break
-        case 'x-ray':
+        case 'xray':
           this.loadXrayFlux()
           break
       }

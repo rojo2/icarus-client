@@ -32,7 +32,12 @@ export function formatDateTime(date) {
   )
 }
 
-function pad(value, length = 2, chr = '0') {
+export function exponent(value, base = 10) {
+  if (!value) return 0
+  return Math.floor(Math.log10(Math.abs(value)) / Math.log10(base))
+}
+
+export function pad(value, length = 2, chr = '0') {
   let str = String(value)
   if (str.length < length) {
     str = chr + str
@@ -62,11 +67,11 @@ export function daysFrom(days, date = new Date()) {
   return minDateFormatted
 }
 
-function sunspotCoord(value, positive = false) {
+export function sunspotCoord(value, positive = false) {
   return Math.sin(Math.PI * (positive ? 0.5 : -0.5)) * Math.sin(value)
 }
 
-function parseSunspot(data) {
+export function parseSunspot(data) {
   const NS = !!data.substr(0, 1) === 'N'
   const WE = data.substr(3, 1) === 'W'
 
@@ -79,7 +84,7 @@ function parseSunspot(data) {
   return { x, y }
 }
 
-function parseDate(d) {
+export function parseDate(d) {
   if (/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}/.test(d)) {
     const [, year, month, day, hours, minutes, seconds] = d.match(
       /([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})/
@@ -99,39 +104,54 @@ function parseDate(d) {
   return Date.parse(d)
 }
 
-function interpolate(value, min, max) {
+export function interpolate(value, min, max) {
   return min + value * (max - min)
 }
 
-function interpolateLog(value, min, max) {
+export function interpolateLog(value, min, max) {
   return interpolate(Math.log10(value), Math.log10(min), Math.log10(max))
 }
 
-function range(value, min, max) {
+export function from(value, min, max) {
   return (value - min) / (max - min)
 }
 
-function ts(list, x = 'date', y = 'ts') {
+export function to(value, min, max) {
+  return (1 - value) * min + value * max
+}
+
+export function fromTo(value, fromMin, fromMax, toMin, toMax) {
+  return to(from(value, fromMin, fromMax), toMin, toMax)
+}
+
+export function ts(list, x = 'date', y = 'ts') {
   return list.map((item) => {
     item[y] = new Date(item[x])
     return item
   })
 }
 
-function time(list, x = 'date', y = 'time') {
+export function time(list, x = 'date', y = 'time') {
   return list.map((item) => {
-    item[y] = parseDate(item[x]).getTime()
-    return item
+    if (x in item) {
+      return {
+        ...item,
+        [y]: parseDate(item[x]).getTime()
+      }
+    }
+    return {
+      ...item
+    }
   })
 }
 
-function max(list, name) {
+export function max(list, name) {
   return list.reduce((acc, current) => {
     return Math.max(acc, current[name])
   }, Number.MIN_VALUE)
 }
 
-function maxOf(lists, name, count = 0) {
+export function maxOf(lists, name, count = 0) {
   if (count <= 0) {
     return Math.max(...lists.map((list) => max(list, name)))
   } else {
@@ -144,13 +164,13 @@ function maxOf(lists, name, count = 0) {
   }
 }
 
-function min(list, name) {
+export function min(list, name) {
   return list.reduce((acc, current) => {
     return Math.min(acc, current[name])
   }, Number.MAX_VALUE)
 }
 
-function minOf(lists, name, count = 0) {
+export function minOf(lists, name, count = 0) {
   if (count <= 0) {
     return Math.min(...lists.map((list) => min(list, name)))
   } else {
@@ -163,50 +183,47 @@ function minOf(lists, name, count = 0) {
   }
 }
 
-function log(value, min, max) {
+export function log(value, min, max) {
   const m = Math.log10(min)
   return (Math.log10(value) - m) / (Math.log10(max) - m)
 }
 
-function pointsLog(list, x, y, minX, maxX, minY, maxY) {
+export function pointsLog(list, x, y, minX, maxX, minY, maxY) {
   return list.map((item) => {
     return {
-      x: range(item[x], minX, maxX),
+      x: from(item[x], minX, maxX),
       y: log(item[y], minY, maxY)
     }
   })
 }
 
-function points(list, x, y, minX, maxX, minY, maxY) {
+export function points(list, x, y, minX, maxX, minY, maxY) {
   return list.map((item) => {
     return {
-      x: range(item[x], minX, maxX),
-      y: range(item[y], minY, maxY)
+      x: from(item[x], minX, maxX),
+      y: from(item[y], minY, maxY)
     }
   })
 }
 
-function dots(points, width, height) {
+export function dots(points, width, height) {
   return points.map((point) => {
     const x = point.x * width
     const y = height - point.y * height
     if (x === 0 && y === 0) {
       return null
     }
-    return (
-      <rect
-        className="Graph__dot"
-        x={x}
-        y={y}
-        width="2"
-        height="2"
-        key={`${x}_${y}`}
-      ></rect>
-    )
+    return {
+      x,
+      y,
+      w: 2,
+      h: 2,
+      key: `${x}_${y}_${Math.random() * Number.MAX_SAFE_INTEGER}`
+    }
   })
 }
 
-function areaPath(points, width, height) {
+export function areaPath(points, width, height) {
   return (
     points.reduce((acc, point, index) => {
       const cmd = index === 0 ? 'M' : 'L'
@@ -216,24 +233,35 @@ function areaPath(points, width, height) {
   )
 }
 
-function path(points, width, height) {
+export function path(points, width, height) {
+  let isNextM = true
   return points.reduce((acc, point, index) => {
-    const cmd = index === 0 ? 'M' : 'L'
-    const pos = `${cmd}${point.x * width} ${height - point.y * height}`
+    const x = point.x * width
+    const y = height - point.y * height
+    if (!Number.isFinite(x) || !Number.isFinite(y)) {
+      isNextM = true
+      return acc + ''
+    }
+    let cmd = 'L'
+    if (isNextM) {
+      cmd = 'M'
+      isNextM = false
+    }
+    const pos = `${cmd}${x} ${y}`
     return acc + (index > 0 ? ',' : '') + pos
   }, '')
 }
 
-function nearest(value, roundTo = 0.1) {
+export function nearest(value, roundTo = 0.1) {
   return Math.round(value / roundTo) * roundTo
 }
 
 function ticksLog(min, max) {
-  const range = max - min
-  const step = range / 10
+  const minExponent = exponent(min)
+  const maxExponent = exponent(max)
   const ticks = []
-  for (let i = min; i < max; i += step) {
-    ticks.push(Math.log10(i) / Math.log10(max))
+  for (let value = minExponent; value < maxExponent; value++) {
+    ticks.push(10 ** value)
   }
   return ticks
 }
@@ -242,13 +270,13 @@ function ticks(min, max) {
   const range = max - min
   const step = range / 10
   const ticks = []
-  for (let i = min; i <= max; i += step) {
-    ticks.push(i)
+  for (let value = min; value <= max; value += step) {
+    ticks.push(value)
   }
   return ticks
 }
 
-function canvasDot(points, canvas, style = { color: '#fff', width: 1 }) {
+export function canvasDot(points, canvas, style = { color: '#fff', width: 1 }) {
   const context = canvas.getContext('2d')
   const halfWidth = style.width * 0.5
   points.forEach((point, index) => {
@@ -262,7 +290,11 @@ function canvasDot(points, canvas, style = { color: '#fff', width: 1 }) {
   })
 }
 
-function canvasLine(points, canvas, style = { color: '#fff', width: 1 }) {
+export function canvasLine(
+  points,
+  canvas,
+  style = { color: '#fff', width: 1 }
+) {
   const context = canvas.getContext('2d')
   context.beginPath()
   points.forEach((point, index) => {
@@ -277,7 +309,7 @@ function canvasLine(points, canvas, style = { color: '#fff', width: 1 }) {
   context.stroke()
 }
 
-function radio(list) {
+export function radio(list) {
   ts(list, 'date')
   const items = []
   let lastItem = null
@@ -293,10 +325,13 @@ function radio(list) {
 }
 
 export default {
+  exponent,
   parseDate,
   interpolate,
   interpolateLog,
-  range,
+  from,
+  to,
+  fromTo,
   time,
   ts,
   max,
@@ -318,8 +353,5 @@ export default {
   padLeft,
   padRight,
   sunspotCoord,
-  parseSunspot,
-  nearest,
-  canvasDot,
-  canvasLine
+  parseSunspot
 }

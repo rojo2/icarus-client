@@ -1,7 +1,7 @@
 <template>
   <svg class="Graph__image" width="100%" height="100%" :viewBox="viewBox">
     <g :transform="transform">
-      <slot></slot>
+      <slot :width="mWidth" :height="mHeight"></slot>
       <line
         class="Graph__timeline"
         y1="0"
@@ -20,16 +20,6 @@ export default {
       type: Number,
       default: 0,
       required: false
-    },
-    width: {
-      type: Number,
-      default: 0,
-      required: false
-    },
-    height: {
-      type: Number,
-      default: 0,
-      required: false
     }
   },
   data() {
@@ -44,6 +34,12 @@ export default {
     }
   },
   computed: {
+    width() {
+      return 1044
+    },
+    height() {
+      return 618
+    },
     mWidth() {
       return this.width - (this.margin.left + this.margin.right)
     },

@@ -14,6 +14,7 @@
     <path class="Graph__line Graph__color0" :d="d0" />
     <path class="Graph__area Graph__color1" :d="a1" />
     <path class="Graph__line Graph__color1" :d="d1" />
+
     <g class="Graph__axis" :transform="`translate(0,${height})`">
       <!-- {{ xTicks }} -->
       <g
@@ -79,10 +80,10 @@ export default {
       return utils.minOf(this.data, 'time', 2)
     },
     yMin() {
-      return 0.01
+      return 0.000000001
     },
     yMax() {
-      return 120
+      return 0.00006
     },
     d0() {
       return utils.path(

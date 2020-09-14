@@ -2,11 +2,15 @@
   <div class="Graph__legends">
     <a href="#" class="Graph__legend">
       <div :class="classes10"></div>
-      <div class="Graph__legendLabel">{{ particle10 }}</div>
+      <div class="Graph__legendLabel">
+        {{ particle10 }}
+      </div>
     </a>
     <a href="#" class="Graph__legend">
       <div :class="classes100"></div>
-      <div class="Graph__legendLabel">{{ particle100 }}</div>
+      <div class="Graph__legendLabel">
+        {{ particle100 }}
+      </div>
     </a>
   </div>
 </template>
@@ -16,9 +20,7 @@ export default {
   props: {
     data: {
       type: [Array],
-      default() {
-        return []
-      }
+      required: true
     }
   },
   computed: {
